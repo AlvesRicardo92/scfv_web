@@ -1,0 +1,46 @@
+.blue-cell {
+  background-color:rgb(142,169,219);
+}
+.united-cells {
+  border-bottom: none;
+  border-left: none;
+}
+.table-bordered {
+  border: 2px solid black;
+}
+.auto-overflow{
+  overflow: auto;
+}
+td{
+  white-space:nowrap;
+}
+.largura-40{
+  width:40%;
+}
+.largura-50{
+  width:50%;
+}
+.largura-55{
+  width:55%;
+}
+.largura-60{
+  width:60%;
+}
+.largura-85{
+  width:85%;
+}
+.fonte-12{
+  font-size:12px;
+}
+.incluir{
+  background-color: rgb(54, 175, 85);
+}
+.excluir{
+  background-color: rgb(175, 54, 54);
+}
+.alterado{
+  background-color: rgb(218, 197, 13);
+}
+.transferido{
+  background-color: rgb(138, 138, 138);
+}
