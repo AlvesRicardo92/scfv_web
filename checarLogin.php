@@ -15,7 +15,7 @@
         $usuarioPOST = $mysqli -> real_escape_string($_POST["usuario"]);
         $senhaPOST = $mysqli -> real_escape_string($_POST["senha"]);
 
-        $stmt = $mysqli->prepare("SELECT id, nome,usuario,senha,id_departamento,id_osc FROM dados_login WHERE usuario like ?");
+        $stmt = $mysqli->prepare("SELECT id, nome,usuario,senha,id_departamento,id_osc,codigo_permissoes FROM dados_login WHERE usuario like ?");
         $stmt->bind_param('s', $usuarioPOST);
 
         if ($stmt->execute()) {
@@ -27,6 +27,7 @@
 					$senhaBanco = $row['senha'];
 					$id_osc = $row['id_osc'];
                     $id_departamento=$row['id_departamento'];
+                    $codigo_permissoes=$row['codigo_permissoes'];
                 }
                 $resultado -> free_result();
                 if ($senhaPOST == $senhaBanco){
@@ -39,7 +40,7 @@
                         $_SESSION['id']= $id_osc;
                         echo $id_osc;
                     }
-					
+					$_SESSION['codPerm']= $codigo_permissoes;
 					exit();
 				}
             }

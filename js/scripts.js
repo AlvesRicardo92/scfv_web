@@ -655,6 +655,182 @@ $(document).ready(function () {
     });
     // #endregion
 
+    // #region BOTÃO GRUPOS 
+    $("#grupos").click(function () {
+        $('#modal_grupos').removeAttr("style");
+        $('#labelModal_grupos').removeAttr("style");
+    });
+    // #endregion
+
+    // #region BOTÃO NOVO GRUPOS
+    $("#novoGrupo").click(function () {
+        $('#modal_grupos').attr("style", "display:none;");
+        $('#labelModal_grupos').attr("style", "display:none;");
+    });
+    // #endregion
+    novoGrupo
+    // #region VISUALIZAR OSC
+    $(".visualizarOSC").click(function () {
+        var idOSC = $(this).closest("tr").find(".idOSC").text();
+        $(".modal-title").text('Editar OSC');
+        $('.modal_nomeOSC').attr("disabled", "");
+        $('.modal_apelidoOSC').attr("disabled", "");
+        $('.modal_inscricaoCMAS').attr("disabled", "");
+        $('.modal_cnpj').attr("disabled", "");
+        $('.modal_cep').attr("disabled", "");
+        $('#buscarCEP').attr("disabled", "");
+        $('.modal_numeroEndereco').attr("disabled", "");
+        $('.modal_telefoneOSC').attr("disabled", "");
+        $('.modal_site').attr("disabled", "");
+        $('.modal_email').attr("disabled", "");
+        $('.modal_CRAS').attr("disabled", "");
+        $('.modal_tecnicoReferenciaCras').attr("disabled", "");
+        $('.modal_nomePresidente').attr("disabled", "");
+        $('.modal_telefonePresidente').attr("disabled", "");
+        $('.modal_emailPresidente').attr("disabled", "");
+        $('#salvarOSC').attr("disabled", "");
+        $('#cadastrarGrupo').attr("disabled", "");
+        $('#novoGrupo').attr("disabled", "");
+
+        $.ajax({
+            url: 'dadosOSC.php',
+            async: false,
+            type: 'POST',
+            data: { idOSC: idOSC },
+            dataType: 'json',
+            done: function () {
+                alert("feito");
+                console.log('feito');
+            },
+            success: function (data) {
+                if (data.status == 'sucesso') {
+                    $('.modal_nomeOSC').val(data.nomeOSC);
+                    $('.modal_apelidoOSC').val(data.apelidoOSC);
+                    $('.modal_inscricaoCMAS').val(data.inscricaoCMAS);
+                    $('.modal_cnpj').val(data.cnpj);
+                    $('#idCEP').text(data.idCEP);
+                    buscarCEPpeloID();
+                    $('.modal_numeroEndereco').val(data.numeroEndereco);
+                    $('.modal_telefoneOSC').val(data.telefone);
+                    $('.modal_site').val(data.site);
+                    $('.modal_email').val(data.email);
+                    $('.modal_CRAS').val(data.idCRAS);
+                    $('.modal_tecnicoReferenciaCras').val(data.idTecnicoCRAS);
+                    $('.modal_nomePresidente').val(data.nomePresidente);
+                    $('.modal_telefonePresidente').val(data.telefonePresidente);
+                    $('.modal_emailPresidente').val(data.emailPresidente);
+                }
+                else {
+                    $('.modal_nomeOSC').val('');
+                    $('.modal_apelidoOSC').val('');
+                    $('.modal_inscricaoCMAS').val('');
+                    $('.modal_cnpj').val('');
+                    $('#idCEP').text('');
+                    $('.modal_numeroEndereco').val('');
+                    $('.modal_telefoneOSC').val('');
+                    $('.modal_site').val('');
+                    $('.modal_email').val('');
+                    $('.modal_CRAS').val('');
+                    $('.modal_tecnicoReferenciaCras').val('');
+                    $('.modal_nomePresidente').val('');
+                    $('.modal_telefonePresidente').val('');
+                    $('.modal_emailPresidente').val('');
+                    alert('Erro ao localizar os dados da OSC.');
+                }
+            },
+            fail: function () {
+                alert("falha");
+                console.log('falha');
+            },
+            error: function () {
+                alert("error");
+                console.log('erro');
+            }
+        });
+    });
+    // #endregion
+
+    // #region EDITAR OSC
+    $(".editarOSC").click(function () {
+        var idOSC = $(this).closest("tr").find(".idOSC").text();
+        $(".modal-title").text('Editar OSC');
+        $('.modal_nomeOSC').removeAttr("disabled");
+        $('.modal_apelidoOSC').removeAttr("disabled");
+        $('.modal_inscricaoCMAS').removeAttr("disabled");
+        $('.modal_cnpj').removeAttr("disabled");
+        $('.modal_cep').removeAttr("disabled");
+        $('#buscarCEP').removeAttr("disabled");
+        $('.modal_numeroEndereco').removeAttr("disabled");
+        $('.modal_telefoneOSC').removeAttr("disabled");
+        $('.modal_site').removeAttr("disabled");
+        $('.modal_email').removeAttr("disabled");
+        $('.modal_CRAS').removeAttr("disabled");
+        $('.modal_tecnicoReferenciaCras').removeAttr("disabled");
+        $('.modal_nomePresidente').removeAttr("disabled");
+        $('.modal_telefonePresidente').removeAttr("disabled");
+        $('.modal_emailPresidente').removeAttr("disabled");
+        $('#salvarOSC').removeAttr("disabled");
+        $('#cadastrarGrupo').removeAttr("disabled");
+        $('#novoGrupo').removeAttr("disabled");
+
+        $.ajax({
+            url: 'dadosOSC.php',
+            async: false,
+            type: 'POST',
+            data: { idOSC: idOSC },
+            dataType: 'json',
+            done: function () {
+                alert("feito");
+                console.log('feito');
+            },
+            success: function (data) {
+                if (data.status == 'sucesso') {
+                    $('.modal_nomeOSC').val(data.nomeOSC);
+                    $('.modal_apelidoOSC').val(data.apelidoOSC);
+                    $('.modal_inscricaoCMAS').val(data.inscricaoCMAS);
+                    $('.modal_cnpj').val(data.cnpj);
+                    $('#idCEP').text(data.id);
+                    $('#buscarCEP').click();
+                    $('.modal_numeroEndereco').val(data.numeroEndereco);
+                    $('.modal_telefoneOSC').val(data.telefone);
+                    $('.modal_site').val(data.site);
+                    $('.modal_email').val(data.email);
+                    $('.modal_CRAS').val(data.idCRAS);
+                    $('.modal_tecnicoReferenciaCras').val(data.idTecnicoCRAS);
+                    $('.modal_nomePresidente').val(data.nomePresidente);
+                    $('.modal_telefonePresidente').val(data.telefonePresidente);
+                    $('.modal_emailPresidente').val(data.emailPresidente);
+                }
+                else {
+                    $('.modal_nomeOSC').val('');
+                    $('.modal_apelidoOSC').val('');
+                    $('.modal_inscricaoCMAS').val('');
+                    $('.modal_cnpj').val('');
+                    $('#idCEP').text('');
+                    $('.modal_numeroEndereco').val('');
+                    $('.modal_telefoneOSC').val('');
+                    $('.modal_site').val('');
+                    $('.modal_email').val('');
+                    $('.modal_CRAS').val('');
+                    $('.modal_tecnicoReferenciaCras').val('');
+                    $('.modal_nomePresidente').val('');
+                    $('.modal_telefonePresidente').val('');
+                    $('.modal_emailPresidente').val('');
+                    alert('Erro ao localizar os dados da OSC.');
+                }
+            },
+            fail: function () {
+                alert("falha");
+                console.log('falha');
+            },
+            error: function () {
+                alert("error");
+                console.log('erro');
+            }
+        });
+    });
+    // #endregion
+
     // #region EDITAR ATENDIDO
     $('.botao_editar').click(function () {
         $(".modal-title").text('Editar Atendido');
@@ -842,6 +1018,106 @@ $('#novoAtendido').click(function () {
     $('.modal_vila').val('');
     $('.modal_bairro').val('');
     $('.modal_complementoEndereco').val('');
+});
+// #endregion
+
+// #region CLICAR NO BOTÃO NOVA OSC
+$('#novaOSC').click(function () {
+    $("#staticBackdropLabel").text('Cadastro OSC');
+    $(".modal_nomeOSC").text('');
+    $(".modal_apelidoOSC").text('');
+    $(".modal_inscricaoCMAS").text('');
+    $('.modal_cnpj').val('');
+    $('.modal_cep').val('');
+    $('.modal_logradouro').val('');
+    $('.modal_numeroEndereco').val('');
+    $('.modal_bairro').val('');
+    $('.modal_telefoneOSC').val('');
+    $(".modal_site").val('');
+    $('.modal_email').val('');
+    $(".modal_CRAS").val(0);
+    $('.modal_tecnicoReferenciaCras').val(0);
+    $('.modal_nomePresidente').val('');
+    $('.modal_telefonePresidente').val('');
+    $('.modal_emailPresidente').val('');
+});
+// #endregion
+
+// #region MUDANÇA NO COMBO GRUPO
+$('.modal_Grupos').change(function () {
+    if ($(this).val() == 0) {
+        $('#editarGrupo').attr("style", "display:none;");
+    }
+    else{
+        $('#editarGrupo').removeAttr("style");
+    }
+    $('#rb_comTermo').attr("disabled", "");
+    $('#rb_semTermo').attr("disabled", "");
+    $('.modal_nomeTecnicoOSC').attr("disabled", "");
+    $('.modal_nomeGrupo').attr("disabled", "");
+    $('.modal_faixaEtaria').attr("disabled", "");
+    $('#inlineCheckbox1').attr("disabled", "");
+    $('#inlineCheckbox2').attr("disabled", "");
+    $('#inlineCheckbox3').attr("disabled", "");
+    $('#inlineCheckbox4').attr("disabled", "");
+    $('#inlineCheckbox5').attr("disabled", "");
+    $('.modal_cargaHoraria').attr("disabled", "");
+    $('.modal_enderecoExecucao').attr("disabled", "");
+    $('#salvarGrupo').attr("disabled", "");
+});
+//#endregion
+
+// #region CLICAR NO BOTÃO GRUPOS
+$('#grupos').click(function () {
+    $('#rb_comTermo').attr("disabled", "");
+    $('#rb_semTermo').attr("disabled", "");
+    $('.modal_nomeTecnicoOSC').attr("disabled", "");
+    $('.modal_nomeGrupo').attr("disabled", "");
+    $('.modal_faixaEtaria').attr("disabled", "");
+    $('#inlineCheckbox1').attr("disabled", "");
+    $('#inlineCheckbox2').attr("disabled", "");
+    $('#inlineCheckbox3').attr("disabled", "");
+    $('#inlineCheckbox4').attr("disabled", "");
+    $('#inlineCheckbox5').attr("disabled", "");
+    $('.modal_cargaHoraria').attr("disabled", "");
+    $('.modal_enderecoExecucao').attr("disabled", "");
+    $('#salvarGrupo').attr("disabled", "");
+});
+//#endregion
+
+// #region CLICAR NO BOTÃO EDITAR GRUPO
+$('#editarGrupo').click(function () {
+    $('#rb_comTermo').removeAttr("disabled");
+    $('#rb_semTermo').removeAttr("disabled");
+    $('.modal_nomeTecnicoOSC').removeAttr("disabled");
+    $('.modal_nomeGrupo').removeAttr("disabled");
+    $('.modal_faixaEtaria').removeAttr("disabled");
+    $('#inlineCheckbox1').removeAttr("disabled");
+    $('#inlineCheckbox2').removeAttr("disabled");
+    $('#inlineCheckbox3').removeAttr("disabled");
+    $('#inlineCheckbox4').removeAttr("disabled");
+    $('#inlineCheckbox5').removeAttr("disabled");
+    $('.modal_cargaHoraria').removeAttr("disabled");
+    $('.modal_enderecoExecucao').removeAttr("disabled");
+    $('#salvarGrupo').removeAttr("disabled");
+});
+// #endregion
+
+// #region CLICAR NO BOTÃO NOVO GRUPO
+$('#novoGrupo').click(function () {
+    $('#rb_comTermo').removeAttr("disabled");
+    $('#rb_semTermo').removeAttr("disabled");
+    $('.modal_nomeTecnicoOSC').removeAttr("disabled");
+    $('.modal_nomeGrupo').removeAttr("disabled");
+    $('.modal_faixaEtaria').removeAttr("disabled");
+    $('#inlineCheckbox1').removeAttr("disabled");
+    $('#inlineCheckbox2').removeAttr("disabled");
+    $('#inlineCheckbox3').removeAttr("disabled");
+    $('#inlineCheckbox4').removeAttr("disabled");
+    $('#inlineCheckbox5').removeAttr("disabled");
+    $('.modal_cargaHoraria').removeAttr("disabled");
+    $('.modal_enderecoExecucao').removeAttr("disabled");
+    $('#salvarGrupo').removeAttr("disabled");
 });
 // #endregion
 
@@ -1369,6 +1645,7 @@ $("#salvarAlteracao").click(function () {
         }
     }
     // #endregion
+
     // #region SALVAR CADASTRO DE NOVO ATENDIDO
     else {
         nome = $('.modal_nomeAtendido').val();
@@ -1486,33 +1763,72 @@ $("#salvarAlteracao").click(function () {
 });
 // #endregion
 
+// #region BUSCAR ENDEREÇO PELO CEP
 $('#buscarCEP').click(function () {
     var cep = $('.modal_cep').val();
-    $.ajax({
-        url: 'buscaCEP.php', // URL da sua página PHP para processar a requisição
-        method: 'POST', // Método da requisição (GET ou POST)
-        data: { cep: cep }, // Dados a serem enviados para a página PHP
-        dataType: 'json', // Tipo de dados esperado na resposta (JSON neste caso)
-        success: function (data) {
-            if (data.status == 'sucesso') {
-                $("#idCEP").text(data.id);
-                $('.modal_logradouro').val(data.logradouro);
-                $('.modal_vila').val(data.vila);
-                $('.modal_bairro').val(data.bairro);
+    if(cep!=''){
+        $.ajax({
+            url: 'buscaCEP.php', // URL da sua página PHP para processar a requisição
+            method: 'POST', // Método da requisição (GET ou POST)
+            data: { cep: cep }, // Dados a serem enviados para a página PHP
+            dataType: 'json', // Tipo de dados esperado na resposta (JSON neste caso)
+            success: function (data) {
+                if (data.status == 'sucesso') {
+                    $("#idCEP").text(data.id);
+                    $('.modal_logradouro').val(data.logradouro);
+                    $('.modal_vila').val(data.vila);
+                    $('.modal_bairro').val(data.bairro);
+                }
+                else {
+                    $("#idCEP").text('');
+                    $('.modal_logradouro').val('');
+                    $('.modal_vila').val('');
+                    $('.modal_bairro').val('');
+                    alert('CEP não localizado.\nVerifique o CEP e digite no formato 00000-000');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error); // Se houver um erro na requisição AJAX, exibe no console do navegador
             }
-            else {
-                $("#idCEP").text('');
-                $('.modal_logradouro').val('');
-                $('.modal_vila').val('');
-                $('.modal_bairro').val('');
-                alert('CEP não localizado.\nVerifique o CEP e digite no formato 00000-000');
-            }
-        },
-        error: function (xhr, status, error) {
-            console.log(error); // Se houver um erro na requisição AJAX, exibe no console do navegador
-        }
-    });
+        });
+    }
+    
 });
+//#endregion
+
+// #region BUSCAR ENDEREÇO PELO ID DO CEP
+function buscarCEPpeloID() {
+    var idCep = $('#idCEP').text();
+    if(idCep!=''){
+        $.ajax({
+            url: 'buscaIdCEP.php', // URL da sua página PHP para processar a requisição
+            method: 'POST', // Método da requisição (GET ou POST)
+            data: { idCep: idCep }, // Dados a serem enviados para a página PHP
+            dataType: 'json', // Tipo de dados esperado na resposta (JSON neste caso)
+            success: function (data) {
+                if (data.status == 'sucesso') {
+                    $('.modal_cep').val(data.numeroCEP);
+                    $('.modal_logradouro').val(data.logradouro);
+                    $('.modal_vila').val(data.vila);
+                    $('.modal_bairro').val(data.bairro);
+                }
+                else {
+                    $(".modal_cep").val('');
+                    $('.modal_logradouro').val('');
+                    $('.modal_vila').val('');
+                    $('.modal_bairro').val('');
+                    alert('Endereço não localizado');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error); // Se houver um erro na requisição AJAX, exibe no console do navegador
+            }
+        });
+    }
+    
+}
+//#endregion
+
 /*function imprimirSI(){
     window.location.href = "impressaoSI.php";
 }

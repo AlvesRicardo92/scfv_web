@@ -9,6 +9,15 @@
 		<li class="nav-item">
 			<a class="nav-link" href="inicio.php">Página Inicial</a>
 		</li>
+		<?php
+			if(isset($_SESSION['codPerm'])){
+				if(mb_substr($_SESSION['codPerm'], 0, 1)==="1"){
+					echo '<li class="nav-item">
+							<a class="nav-link" href="adm.php">ADM</a>
+						</li>';
+				}
+			}
+		?>
 		<li class="nav-item">
 			<a class="nav-link" href="detalhes_OSC.php">SCFV</a>
 		</li>
