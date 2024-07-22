@@ -659,6 +659,7 @@ $(document).ready(function () {
     $("#grupos").click(function () {
         $('#modal_grupos').removeAttr("style");
         $('#labelModal_grupos').removeAttr("style");
+        $('#staticBackdrop2Label').text("Visualizar Grupos");
     });
     // #endregion
 
@@ -668,11 +669,161 @@ $(document).ready(function () {
         $('#labelModal_grupos').attr("style", "display:none;");
     });
     // #endregion
-    novoGrupo
+
+    // #region BOTÃO SALVAR OSC
+    $("#salvarOSC").click(function () {
+        var erros=0;
+        if ($('.modal_nomeOSC').val() == '') {
+            $('.modal_nomeOSC').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_nomeOSC').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_apelidoOSC').val() == '') {
+            $('.modal_apelidoOSC').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_apelidoOSC').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_inscricaoCMAS').val() == '') {
+            $('.modal_inscricaoCMAS').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_inscricaoCMAS').css({ border: '1px solid #dee2e6' });
+        }            
+        if ($('.modal_cnpj').val() == '') {
+            $('.modal_cnpj').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_cnpj').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_logradouro').val() == '') {
+            $('.modal_cep').css({ border: '2px solid red' });
+            $('#buscarCEP').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_cep').css({ border: '1px solid #dee2e6' });
+            $('#buscarCEP').css({ border: '1px solid #0d6efd' });
+        }
+        if ($('.modal_telefoneOSC').val() == '') {
+            $('.modal_telefoneOSC').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_telefoneOSC').css({ border: '1px solid #dee2e6' });
+        }      
+        if ($('.modal_site').val() == '') {
+            $('.modal_site').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_site').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_email').val() == '') {
+            $('.modal_email').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_email').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_CRAS').val() == '') {
+            $('.modal_CRAS').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_CRAS').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_nomePresidente').val() == '') {
+            $('.modal_nomePresidente').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_nomePresidente').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_telefonePresidente').val() == '') {
+            $('.modal_telefonePresidente').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_telefonePresidente').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_emailPresidente').val() == '') {
+            $('.modal_emailPresidente').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_emailPresidente').css({ border: '1px solid #dee2e6' });
+        }
+        if($('#staticBackdropLabel').text()=="Cadastro OSC"){
+            if(erros==0){            
+                $.ajax({
+                    url: 'checarLogin.php',
+                    async: false,
+                    type: 'POST',
+                    data: { usuario: usuario, senha: senha },
+                    dataType: 'text',
+                    done: function () {
+                        alert("feito");
+                    },
+                    success: function (resultado) {
+                        if (resultado > 0) {
+                            window.location.href = "inicio.php";
+                        }
+                        else {
+                            console.log("resultado= " + resultado);
+                            alert("Erro ao logar. Verifique o console");
+                        }
+                    },
+                    fail: function () {
+                        alert("falha");
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+        }
+        else if($('#staticBackdropLabel').text()=="Editar OSC"){
+            if(erros==0){ 
+                $.ajax({
+                    url: 'checarLogin.php',
+                    async: false,
+                    type: 'POST',
+                    data: { usuario: usuario, senha: senha },
+                    dataType: 'text',
+                    done: function () {
+                        alert("feito");
+                    },
+                    success: function (resultado) {
+                        if (resultado > 0) {
+                            window.location.href = "inicio.php";
+                        }
+                        else {
+                            console.log("resultado= " + resultado);
+                            alert("Erro ao logar. Verifique o console");
+                        }
+                    },
+                    fail: function () {
+                        alert("falha");
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+        }
+    });
+    // #endregion
+
     // #region VISUALIZAR OSC
     $(".visualizarOSC").click(function () {
         var idOSC = $(this).closest("tr").find(".idOSC").text();
-        $(".modal-title").text('Editar OSC');
+        $("#staticBackdropLabel").text('Visualizar OSC');
         $('.modal_nomeOSC').attr("disabled", "");
         $('.modal_apelidoOSC').attr("disabled", "");
         $('.modal_inscricaoCMAS').attr("disabled", "");
@@ -691,6 +842,128 @@ $(document).ready(function () {
         $('#salvarOSC').attr("disabled", "");
         $('#cadastrarGrupo').attr("disabled", "");
         $('#novoGrupo').attr("disabled", "");
+        $('#grupos').removeAttr("disabled");
+
+        $.ajax({
+            url: 'dadosOSC.php',
+            async: false,
+            type: 'POST',
+            data: { idOSC: idOSC },
+            dataType: 'json',
+            done: function () {
+                alert("feito");
+                console.log('feito');
+            },
+            success: function (data) {
+                if (data.status == 'sucesso') {
+                    $('#modal_spanIdOSC').text(idOSC);
+                    $('.modal_nomeOSC').val(data.nomeOSC);
+                    $('.modal_apelidoOSC').val(data.apelidoOSC);
+                    $('.modal_inscricaoCMAS').val(data.inscricaoCMAS);
+                    $('.modal_cnpj').val(data.cnpj);
+                    $('#idCEP').text(data.idCEP);
+                    buscarCEPpeloID();
+                    $('.modal_numeroEndereco').val(data.numeroEndereco);
+                    $('.modal_telefoneOSC').val(data.telefone);
+                    $('.modal_site').val(data.site);
+                    $('.modal_email').val(data.email);
+                    $('.modal_CRAS').val(data.idCRAS);
+                    $(".modal_CRAS").trigger("change");
+                    $('.modal_tecnicoReferenciaCras').val(data.idTecnicoCRAS);
+                    $('.modal_nomePresidente').val(data.nomePresidente);
+                    $('.modal_telefonePresidente').val(data.telefonePresidente);
+                    $('.modal_emailPresidente').val(data.emailPresidente);
+                }
+                else {
+                    $('.modal_nomeOSC').val('');
+                    $('.modal_apelidoOSC').val('');
+                    $('.modal_inscricaoCMAS').val('');
+                    $('.modal_cnpj').val('');
+                    $('#idCEP').text('');
+                    $('.modal_numeroEndereco').val('');
+                    $('.modal_telefoneOSC').val('');
+                    $('.modal_site').val('');
+                    $('.modal_email').val('');
+                    $('.modal_CRAS').val('');
+                    $('.modal_tecnicoReferenciaCras').val('');
+                    $('.modal_nomePresidente').val('');
+                    $('.modal_telefonePresidente').val('');
+                    $('.modal_emailPresidente').val('');
+                    alert('Erro ao localizar os dados da OSC.');
+                }
+            },
+            fail: function () {
+                alert("falha");
+                console.log('falha');
+            },
+            error: function () {
+                alert("error");
+                console.log('erro');
+            }
+        });
+        adicionarGruposOSC(idOSC);
+        
+    });
+    // #endregion
+    
+    // #region ADICIONA OS GRUPOS QUE A OSC POSSUI NO COMBOBOX GRUPOS DO MODAL DA PÁGINA ADMINISTRATIVA
+    function adicionarGruposOSC(idOSC) {
+        $('.modal_Grupos').find('option').remove().end().append('<option value="0">Selecione...</option>')
+        $.ajax({
+            url: 'buscarGruposOSC.php', // URL da sua página PHP para processar a requisição
+            method: 'POST', // Método da requisição (GET ou POST)
+            data: { idOSC: idOSC }, // Dados a serem enviados para a página PHP
+            dataType: 'json', // Tipo de dados esperado na resposta (JSON neste caso)
+            success: function (resultado) {
+                var grupos = $('.modal_Grupos');
+                for (var i = 0; i < resultado.length; i++) {
+                    var grupo = resultado[i];
+                    var option = document.createElement('option');
+                    option.value = grupo.id;
+                    if(grupo.nome_grupo!=''){
+                        option.text = grupo.com_sem_termo+' '+grupo.numero_grupo+' ('+grupo.nome_grupo+')';
+                    }
+                    else{
+                        option.text = grupo.com_sem_termo+' '+grupo.numero_grupo;
+                    }
+                    grupos.append(option);
+                }
+            },
+            fail: function () {
+                alert("falha");
+                console.log('falha');
+            },
+            error: function () {
+                alert("error");
+                console.log('erro');
+            }
+        });
+    }
+    // #endregion
+
+    // #region EDITAR OSC
+    $(".editarOSC").click(function () {
+        var idOSC = $(this).closest("tr").find(".idOSC").text();
+        $("#staticBackdropLabel").text('Editar OSC');
+        $('.modal_nomeOSC').removeAttr("disabled");
+        $('.modal_apelidoOSC').removeAttr("disabled");
+        $('.modal_inscricaoCMAS').removeAttr("disabled");
+        $('.modal_cnpj').removeAttr("disabled");
+        $('.modal_cep').removeAttr("disabled");
+        $('#buscarCEP').removeAttr("disabled");
+        $('.modal_numeroEndereco').removeAttr("disabled");
+        $('.modal_telefoneOSC').removeAttr("disabled");
+        $('.modal_site').removeAttr("disabled");
+        $('.modal_email').removeAttr("disabled");
+        $('.modal_CRAS').removeAttr("disabled");
+        $('.modal_tecnicoReferenciaCras').removeAttr("disabled");
+        $('.modal_nomePresidente').removeAttr("disabled");
+        $('.modal_telefonePresidente').removeAttr("disabled");
+        $('.modal_emailPresidente').removeAttr("disabled");
+        $('#salvarOSC').removeAttr("disabled");
+        $('#cadastrarGrupo').removeAttr("disabled");
+        $('#novoGrupo').removeAttr("disabled");
+        $('#grupos').removeAttr("disabled");
 
         $.ajax({
             url: 'dadosOSC.php',
@@ -715,6 +988,7 @@ $(document).ready(function () {
                     $('.modal_site').val(data.site);
                     $('.modal_email').val(data.email);
                     $('.modal_CRAS').val(data.idCRAS);
+                    $(".modal_CRAS").trigger("change");
                     $('.modal_tecnicoReferenciaCras').val(data.idTecnicoCRAS);
                     $('.modal_nomePresidente').val(data.nomePresidente);
                     $('.modal_telefonePresidente').val(data.telefonePresidente);
@@ -747,87 +1021,8 @@ $(document).ready(function () {
                 console.log('erro');
             }
         });
-    });
-    // #endregion
 
-    // #region EDITAR OSC
-    $(".editarOSC").click(function () {
-        var idOSC = $(this).closest("tr").find(".idOSC").text();
-        $(".modal-title").text('Editar OSC');
-        $('.modal_nomeOSC').removeAttr("disabled");
-        $('.modal_apelidoOSC').removeAttr("disabled");
-        $('.modal_inscricaoCMAS').removeAttr("disabled");
-        $('.modal_cnpj').removeAttr("disabled");
-        $('.modal_cep').removeAttr("disabled");
-        $('#buscarCEP').removeAttr("disabled");
-        $('.modal_numeroEndereco').removeAttr("disabled");
-        $('.modal_telefoneOSC').removeAttr("disabled");
-        $('.modal_site').removeAttr("disabled");
-        $('.modal_email').removeAttr("disabled");
-        $('.modal_CRAS').removeAttr("disabled");
-        $('.modal_tecnicoReferenciaCras').removeAttr("disabled");
-        $('.modal_nomePresidente').removeAttr("disabled");
-        $('.modal_telefonePresidente').removeAttr("disabled");
-        $('.modal_emailPresidente').removeAttr("disabled");
-        $('#salvarOSC').removeAttr("disabled");
-        $('#cadastrarGrupo').removeAttr("disabled");
-        $('#novoGrupo').removeAttr("disabled");
-
-        $.ajax({
-            url: 'dadosOSC.php',
-            async: false,
-            type: 'POST',
-            data: { idOSC: idOSC },
-            dataType: 'json',
-            done: function () {
-                alert("feito");
-                console.log('feito');
-            },
-            success: function (data) {
-                if (data.status == 'sucesso') {
-                    $('.modal_nomeOSC').val(data.nomeOSC);
-                    $('.modal_apelidoOSC').val(data.apelidoOSC);
-                    $('.modal_inscricaoCMAS').val(data.inscricaoCMAS);
-                    $('.modal_cnpj').val(data.cnpj);
-                    $('#idCEP').text(data.id);
-                    $('#buscarCEP').click();
-                    $('.modal_numeroEndereco').val(data.numeroEndereco);
-                    $('.modal_telefoneOSC').val(data.telefone);
-                    $('.modal_site').val(data.site);
-                    $('.modal_email').val(data.email);
-                    $('.modal_CRAS').val(data.idCRAS);
-                    $('.modal_tecnicoReferenciaCras').val(data.idTecnicoCRAS);
-                    $('.modal_nomePresidente').val(data.nomePresidente);
-                    $('.modal_telefonePresidente').val(data.telefonePresidente);
-                    $('.modal_emailPresidente').val(data.emailPresidente);
-                }
-                else {
-                    $('.modal_nomeOSC').val('');
-                    $('.modal_apelidoOSC').val('');
-                    $('.modal_inscricaoCMAS').val('');
-                    $('.modal_cnpj').val('');
-                    $('#idCEP').text('');
-                    $('.modal_numeroEndereco').val('');
-                    $('.modal_telefoneOSC').val('');
-                    $('.modal_site').val('');
-                    $('.modal_email').val('');
-                    $('.modal_CRAS').val('');
-                    $('.modal_tecnicoReferenciaCras').val('');
-                    $('.modal_nomePresidente').val('');
-                    $('.modal_telefonePresidente').val('');
-                    $('.modal_emailPresidente').val('');
-                    alert('Erro ao localizar os dados da OSC.');
-                }
-            },
-            fail: function () {
-                alert("falha");
-                console.log('falha');
-            },
-            error: function () {
-                alert("error");
-                console.log('erro');
-            }
-        });
+        adicionarGruposOSC(idOSC);
     });
     // #endregion
 
@@ -1024,9 +1219,9 @@ $('#novoAtendido').click(function () {
 // #region CLICAR NO BOTÃO NOVA OSC
 $('#novaOSC').click(function () {
     $("#staticBackdropLabel").text('Cadastro OSC');
-    $(".modal_nomeOSC").text('');
-    $(".modal_apelidoOSC").text('');
-    $(".modal_inscricaoCMAS").text('');
+    $(".modal_nomeOSC").val('');
+    $(".modal_apelidoOSC").val('');
+    $(".modal_inscricaoCMAS").val('');
     $('.modal_cnpj').val('');
     $('.modal_cep').val('');
     $('.modal_logradouro').val('');
@@ -1040,30 +1235,121 @@ $('#novaOSC').click(function () {
     $('.modal_nomePresidente').val('');
     $('.modal_telefonePresidente').val('');
     $('.modal_emailPresidente').val('');
+    $('#novoGrupo').attr("disabled", "");
+    $('#grupos').attr("disabled", "");
+    $(".modal_nomeOSC").removeAttr("disabled");
+    $(".modal_apelidoOSC").removeAttr("disabled");
+    $(".modal_inscricaoCMAS").removeAttr("disabled");
+    $('.modal_cnpj').removeAttr("disabled");
+    $('.modal_cep').removeAttr("disabled");
+    $('.modal_numeroEndereco').removeAttr("disabled");
+    $('.modal_telefoneOSC').removeAttr("disabled");
+    $(".modal_site").removeAttr("disabled");
+    $('.modal_email').removeAttr("disabled");
+    $(".modal_CRAS").removeAttr("disabled");
+    $('.modal_tecnicoReferenciaCras').removeAttr("disabled");
+    $('.modal_nomePresidente').removeAttr("disabled");
+    $('.modal_telefonePresidente').removeAttr("disabled");
+    $('.modal_emailPresidente').removeAttr("disabled");
+    $('#salvarOSC').removeAttr("disabled");
+    
 });
 // #endregion
 
-// #region MUDANÇA NO COMBO GRUPO
+// #region BUSCAR DADOS DO GRUPO PARA PÁGINA ADMINISTRATIVA
 $('.modal_Grupos').change(function () {
     if ($(this).val() == 0) {
         $('#editarGrupo').attr("style", "display:none;");
+        $('#rb_comTermo').prop("checked", false);
+        $('#rb_semTermo').prop("checked", false);
+        $('.modal_nomeTecnicoOSC').val('');
+        $('.modal_nomeGrupo').val('');
+        $('.modal_faixaEtaria').val(0);
+        $('#inlineCheckbox1').val(0);
+        $('#inlineCheckbox2').val(0);
+        $('#inlineCheckbox3').val(0);
+        $('#inlineCheckbox4').val(0);
+        $('#inlineCheckbox5').val(0);
+        $('.modal_cargaHoraria').val('');
+        $('.modal_enderecoExecucao').val('');
+        $("input[type='checkbox']").prop("checked", false);
+        $("input[type='checkbox']").attr("disabled", "");
+        $('#rb_comTermo').attr("disabled", "");
+        $('#rb_semTermo').attr("disabled", "");
+        $('.modal_nomeTecnicoOSC').attr("disabled", "");
+        $('.modal_nomeGrupo').attr("disabled", "");
+        $('.modal_faixaEtaria').attr("disabled", "");
+        $('#inlineCheckbox1').attr("disabled", "");
+        $('#inlineCheckbox2').attr("disabled", "");
+        $('#inlineCheckbox3').attr("disabled", "");
+        $('#inlineCheckbox4').attr("disabled", "");
+        $('#inlineCheckbox5').attr("disabled", "");
+        $('.modal_cargaHoraria').attr("disabled", "");
+        $('.modal_enderecoExecucao').attr("disabled", "");
+        $('#salvarGrupo').attr("disabled", "");
+        $('#staticBackdrop2Label').text("Visualizar Grupos");
     }
     else{
         $('#editarGrupo').removeAttr("style");
+        $('#rb_comTermo').attr("disabled", "");
+        $('#rb_semTermo').attr("disabled", "");
+        $('.modal_nomeTecnicoOSC').attr("disabled", "");
+        $('.modal_nomeGrupo').attr("disabled", "");
+        $('.modal_faixaEtaria').attr("disabled", "");
+        $('#inlineCheckbox1').attr("disabled", "");
+        $('#inlineCheckbox2').attr("disabled", "");
+        $('#inlineCheckbox3').attr("disabled", "");
+        $('#inlineCheckbox4').attr("disabled", "");
+        $('#inlineCheckbox5').attr("disabled", "");
+        $('.modal_cargaHoraria').attr("disabled", "");
+        $('.modal_enderecoExecucao').attr("disabled", "");
+        $('#salvarGrupo').attr("disabled", "");
+        $("input[type='checkbox']").attr("disabled", "");
+        $('#staticBackdrop2Label').text("Visualizar Grupos");
+
+        var idGrupo = $('.modal_Grupos') .val();
+        var idOSC = $('#modal_spanIdOSC').text();
+        $.ajax({
+            url: 'buscarDadosGrupo.php',
+            async: false,
+            type: 'POST',
+            data: { idOSC: idOSC, idGrupo: idGrupo},
+            dataType: 'json',
+            done: function () {
+                alert("feito");
+                console.log('feito');
+            },
+            success: function (resultado) {
+                console.log(resultado);
+                $('.modal_nomeGrupo').val(resultado.nomeGrupo);
+                $('.modal_faixaEtaria').val(resultado.idFaixaEtaria);
+                $('.modal_cargaHoraria').val(resultado.cargaHoraria);
+                $('.modal_enderecoExecucao').val(resultado.enderecoExecucao);
+                $('.modal_nomeTecnicoOSC').val(resultado.nomeTecnicoOsc);
+                if(resultado.comSemTermo=="COM TERMO"){
+                    $('#rb_comTermo').prop("checked", true);
+                }
+                else{
+                    $('#rb_semTermo').prop("checked", true);
+                }
+                var arrayDiaDasemana = resultado.idsDiaSemana.split(";");
+                $("input[type='checkbox']").prop("checked", false);
+                arrayDiaDasemana.forEach(function (id) {
+                    $("#ckbDiaSemana" + id).prop("checked", true);
+                });
+            },
+            fail: function (resultado) {
+                alert("falha");
+                console.log(resultado);
+            },
+            error: function (resultado) {
+                alert("error");
+                console.log(resultado);
+            }
+        });
+        
     }
-    $('#rb_comTermo').attr("disabled", "");
-    $('#rb_semTermo').attr("disabled", "");
-    $('.modal_nomeTecnicoOSC').attr("disabled", "");
-    $('.modal_nomeGrupo').attr("disabled", "");
-    $('.modal_faixaEtaria').attr("disabled", "");
-    $('#inlineCheckbox1').attr("disabled", "");
-    $('#inlineCheckbox2').attr("disabled", "");
-    $('#inlineCheckbox3').attr("disabled", "");
-    $('#inlineCheckbox4').attr("disabled", "");
-    $('#inlineCheckbox5').attr("disabled", "");
-    $('.modal_cargaHoraria').attr("disabled", "");
-    $('.modal_enderecoExecucao').attr("disabled", "");
-    $('#salvarGrupo').attr("disabled", "");
+    
 });
 //#endregion
 
@@ -1082,6 +1368,8 @@ $('#grupos').click(function () {
     $('.modal_cargaHoraria').attr("disabled", "");
     $('.modal_enderecoExecucao').attr("disabled", "");
     $('#salvarGrupo').attr("disabled", "");
+    $('#modal_grupos').val(0);
+    
 });
 //#endregion
 
@@ -1100,6 +1388,8 @@ $('#editarGrupo').click(function () {
     $('.modal_cargaHoraria').removeAttr("disabled");
     $('.modal_enderecoExecucao').removeAttr("disabled");
     $('#salvarGrupo').removeAttr("disabled");
+    $("input[type='checkbox']").removeAttr("disabled");
+    $('#staticBackdrop2Label').text("Editar Grupo");
 });
 // #endregion
 
@@ -1118,6 +1408,7 @@ $('#novoGrupo').click(function () {
     $('.modal_cargaHoraria').removeAttr("disabled");
     $('.modal_enderecoExecucao').removeAttr("disabled");
     $('#salvarGrupo').removeAttr("disabled");
+    $('#staticBackdrop2Label').text("Novo Grupo");
 });
 // #endregion
 
@@ -1792,7 +2083,37 @@ $('#buscarCEP').click(function () {
             }
         });
     }
+    else{
+        $("#idCEP").text('');
+        $('.modal_logradouro').val('');
+        $('.modal_vila').val('');
+        $('.modal_bairro').val('');
+    }
     
+});
+//#endregion
+
+// #region PREENCHER A TECNICA DO CRAS QUANDO O CRAS FOR ALTERADO
+$('.modal_CRAS').change(function () {
+    var idCRAS = $(this).val();
+    $('.modal_tecnicoReferenciaCras').find('option').remove().end().append('<option value="0">Selecione...</option>')
+
+    $.ajax({
+        url: 'buscarTecnicoCras.php', // URL da sua página PHP para processar a requisição
+        method: 'POST', // Método da requisição (GET ou POST)
+        data: { idCRAS: idCRAS }, // Dados a serem enviados para a página PHP
+        dataType: 'json', // Tipo de dados esperado na resposta (JSON neste caso)
+        success: function (resultado) {
+            var selectTecnicos = $('.modal_tecnicoReferenciaCras');
+            for (var i = 0; i < resultado.length; i++) {
+                var tecnico = resultado[i];
+                var option = document.createElement('option');
+                option.value = tecnico.id;
+                option.text = tecnico.nome;
+                selectTecnicos.append(option);
+            }
+        }
+    });
 });
 //#endregion
 

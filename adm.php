@@ -86,10 +86,7 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticBackdropLabel">Editar OSC</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						<span style="display:none" id="idAtendido"></span>
-						<span style="display:none" id="idAtendidoNoGrupo"></span>
-						<span style="display:none" id="SeqAtendido"></span>
-						<span style="display:none" id="idGrupo"><?php echo $idGrupo;?></span>
+						<span style="display:none" id="modal_spanIdOSC"></span>
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
@@ -324,13 +321,12 @@
 										<select class="form-select modal_faixaEtaria" id="faixaEtaria" disabled>
 											<option value="0">Selecione...</option>
 											<?php
-												$sql= "select id, nome_cras from dados_cras;";
+												$sql= "SELECT id,faixa_etaria FROM dados_faixa_etaria;";
 												$stmt = $mysqli->prepare($sql);
-												//$stmt->bind_param("i", $idGrupo);
 												if($stmt->execute()){
 													$resultado = $stmt->get_result();
 													while($row = $resultado->fetch_assoc()) { 
-														echo '<option value="'.$row["id"].'">'.$row["nome_cras"].'</option>';
+														echo '<option value="'.$row["id"].'">'.$row["faixa_etaria"].'</option>';
 													}
 												}
 												$resultado->free_result();
@@ -344,25 +340,25 @@
 								<div class="col-md-12 mb-2 ">
 									<fieldset class="mb-3" id="campoDiasDeAtendimento">
 										<legend>Dias de atendimento na semana:</legend>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="2" disabled>
-											<label class="form-check-label" for="inlineCheckbox1">Seg</label>
+										<div class="form-check form-switch form-check-inline">
+											<input class="form-check-input" type="checkbox" id="ckbDiaSemana2" value="2" disabled>
+											<label class="form-check-label" for="ckbDiaSemana2">Seg</label>
 										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="3" disabled>
-											<label class="form-check-label" for="inlineCheckbox2">Ter</label>
+										<div class="form-check form-switch form-check-inline">
+											<input class="form-check-input" type="checkbox" id="ckbDiaSemana3" value="3" disabled>
+											<label class="form-check-label" for="ckbDiaSemana3">Ter</label>
 										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="4" disabled>
-											<label class="form-check-label" for="inlineCheckbox3">Qua</label>
+										<div class="form-check form-switch form-check-inline">
+											<input class="form-check-input" type="checkbox" id="ckbDiaSemana4" value="4" disabled>
+											<label class="form-check-label" for="ckbDiaSemana4">Qua</label>
 										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="5" disabled>
-											<label class="form-check-label" for="inlineCheckbox4">Qui</label>
+										<div class="form-check form-switch form-check-inline">
+											<input class="form-check-input" type="checkbox" id="ckbDiaSemana5" value="5" disabled>
+											<label class="form-check-label" for="ckbDiaSemana5">Qui</label>
 										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="6" disabled>
-											<label class="form-check-label" for="inlineCheckbox5">Sex</label>
+										<div class="form-check form-switch form-check-inline">
+											<input class="form-check-input" type="checkbox" id="ckbDiaSemana6" value="6" disabled>
+											<label class="form-check-label" for="ckbDiaSemana6">Sex</label>
 										</div>
 									</fieldset>
 								</div>
