@@ -85,7 +85,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticBackdropLabel">Editar OSC</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()"></button>
 						<span style="display:none" id="modal_spanIdOSC"></span>
 					</div>
 					<div class="modal-body">
@@ -102,7 +102,7 @@
 								<div class="col-md-4 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Apelido OSC:</span>
-										<input type="text" class="form-control modal_apelidoOSC" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="11">
+										<input type="text" class="form-control modal_apelidoOSC" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 								<div class="col-md-4 ">
@@ -154,19 +154,19 @@
 								<div class="col-md-4 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Telefone:</span>
-										<input type="text" class="form-control modal_telefoneOSC" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="11">
+										<input type="text" class="form-control modal_telefoneOSC" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="15">
 									</div>
 								</div>
 								<div class="col-md-4 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Site:</span>
-										<input type="text" class="form-control modal_site" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="14">
+										<input type="text" class="form-control modal_site" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 								<div class="col-md-4 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">E-mail:</span>
-										<input type="text" class="form-control modal_email" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="15">
+										<input type="text" class="form-control modal_email" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 							</div>
@@ -197,19 +197,6 @@
 										<label class="input-group-text blue-cell" for="inputGroupSelect06">Técnico de Referencia no CRAS</label>
 										<select class="form-select modal_tecnicoReferenciaCras" id="inputGroupSelect06">
 											<option value="0">Selecione...</option>
-											<?php
-												/*$sql= "select id, referenciado from dados_referenciado_cras;";
-												$stmt = $mysqli->prepare($sql);
-												//$stmt->bind_param("i", $idGrupo);
-												if($stmt->execute()){
-													$resultado = $stmt->get_result();
-													while($row = $resultado->fetch_assoc()) { 
-														echo '<option value="'.$row["id"].'">'.$row["referenciado"].'</option>';
-													}
-												}
-												$resultado->free_result();
-												$stmt->close();*/
-											?>
 										</select>
 									</div>
 								</div>
@@ -218,7 +205,7 @@
 								<div class="col-md-7 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Nome do Presidente da OSC:</span>
-										<input type="text" class="form-control modal_nomePresidente" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="15">
+										<input type="text" class="form-control modal_nomePresidente" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 								<div class="col-md-5 ">
@@ -232,7 +219,7 @@
 								<div class="col-md-6 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">E-mail do Presidente da OSC:</span>
-										<input type="text" class="form-control modal_emailPresidente" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="15">
+										<input type="text" class="form-control modal_emailPresidente" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 								<div class="col-md-6" style="text-align: right;">
@@ -244,7 +231,7 @@
 							</div>
 						</div>					
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="javascript:window.location.reload()">Cancelar</button>
 							<button type="button" class="btn btn-primary" id="salvarOSC">Salvar OSC</button>
 						</div>
 						
@@ -291,12 +278,12 @@
 							<div class="row mb-3">	
 								<div class="col-md-12 ">
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb_comTermo" value="option1" disabled>
-										<label class="form-check-label" for="rb_comTermo">Com termo</label>
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb_comTermo" value="COM TERMO" disabled>
+										<label class="form-check-label" for="rb_comTermo" id="label_rb_comTermo">Com termo</label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb_semTermo" value="option2" disabled>
-										<label class="form-check-label" for="rb_semTermo">Sem termo</label>
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb_semTermo" value="SEM TERMO" disabled>
+										<label class="form-check-label" for="rb_semTermo" id="label_rb_semTermo">Sem termo</label>
 									</div>
 								</div>
 							</div>
@@ -342,23 +329,23 @@
 										<legend>Dias de atendimento na semana:</legend>
 										<div class="form-check form-switch form-check-inline">
 											<input class="form-check-input" type="checkbox" id="ckbDiaSemana2" value="2" disabled>
-											<label class="form-check-label" for="ckbDiaSemana2">Seg</label>
+											<label class="form-check-label" for="ckbDiaSemana2" id="label_ckbDiaSemana2">Seg</label>
 										</div>
 										<div class="form-check form-switch form-check-inline">
 											<input class="form-check-input" type="checkbox" id="ckbDiaSemana3" value="3" disabled>
-											<label class="form-check-label" for="ckbDiaSemana3">Ter</label>
+											<label class="form-check-label" for="ckbDiaSemana3" id="label_ckbDiaSemana3">Ter</label>
 										</div>
 										<div class="form-check form-switch form-check-inline">
 											<input class="form-check-input" type="checkbox" id="ckbDiaSemana4" value="4" disabled>
-											<label class="form-check-label" for="ckbDiaSemana4">Qua</label>
+											<label class="form-check-label" for="ckbDiaSemana4" id="label_ckbDiaSemana4">Qua</label>
 										</div>
 										<div class="form-check form-switch form-check-inline">
 											<input class="form-check-input" type="checkbox" id="ckbDiaSemana5" value="5" disabled>
-											<label class="form-check-label" for="ckbDiaSemana5">Qui</label>
+											<label class="form-check-label" for="ckbDiaSemana5" id="label_ckbDiaSemana5">Qui</label>
 										</div>
 										<div class="form-check form-switch form-check-inline">
 											<input class="form-check-input" type="checkbox" id="ckbDiaSemana6" value="6" disabled>
-											<label class="form-check-label" for="ckbDiaSemana6">Sex</label>
+											<label class="form-check-label" for="ckbDiaSemana6" id="label_ckbDiaSemana6">Sex</label>
 										</div>
 									</fieldset>
 								</div>

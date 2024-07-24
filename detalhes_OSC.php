@@ -152,18 +152,13 @@
 							</thead>
 							<tbody>
 								<?php 
-									$sql= "SELECT a.id as 'id', a.nome_grupo as 'nome',a.numero_grupo as 'numeroGrupo',b.faixa_etaria as 'faixaEtaria',a.ids_dia_semana as 'diasSemana',a.carga_horaria as 'cargaHoraria',c.logradouro as 'logradouro',a.numero_endereco as 'numero',d.nome as 'tecnicoOSC' FROM dados_grupos a 
+									//$sql= "SELECT a.id as 'id', a.nome_grupo as 'nome',a.numero_grupo as 'numeroGrupo',b.faixa_etaria as 'faixaEtaria',a.ids_dia_semana as 'diasSemana',a.carga_horaria as 'cargaHoraria',c.logradouro as 'logradouro',a.numero_endereco as 'numero',d.nome as 'tecnicoOSC' FROM dados_grupos a 
+									$sql= "SELECT a.id as 'id', a.nome_grupo as 'nome',a.numero_grupo as 'numeroGrupo',b.faixa_etaria as 'faixaEtaria',a.ids_dia_semana as 'diasSemana',a.carga_horaria as 'cargaHoraria',a.endereco_execucao as enderecoExecucao,a.nome_tecnico_osc as 'tecnicoOSC' FROM dados_grupos a 
 
 									inner join dados_faixa_etaria b ON
 									b.id = a.id_faixa_etaria
 									
-									inner join dados_cep c on 
-									c.id=a.id_cep
-									
-									inner join dados_tecnico_osc d ON
-									d.id=a.id_tecnico_osc
-									
-									WHERE a.id_osc =? order by numero_grupo;";
+									WHERE a.id_osc =? order by com_sem_termo, numero_grupo;";
 									$stmt = $mysqli->prepare($sql);
 									$stmt->bind_param("i", $_SESSION['id']);
 									if($stmt->execute()){
@@ -179,7 +174,7 @@
 									<td><?php echo $row['faixaEtaria'] ?></td>
 									<td><?php echo $row['diasSemana'] ?></td>
 									<td><?php echo $row['cargaHoraria'] ?></td>
-									<td><?php echo $row['logradouro'].', '.$row['numero'] ?></td>
+									<td><?php echo $row['enderecoExecucao']?></td>
 								</tr>
 								<?php
 									}

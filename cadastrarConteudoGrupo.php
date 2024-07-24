@@ -23,11 +23,6 @@
        !isset($_POST["faixaEtaria"])){
         echo 0;
         exit();
-        /*echo $_POST["telefone"].' | '.$_POST["dataNascimento"].' | '.
-        $_POST["corRaca"].' | '.$_POST["dataInclusao"].' | '.$_POST["situacoesPrioritarias"].' | '.$_POST["status"].' | '.$_POST["referenciadoCras"].' | '.
-        $_POST["paifPaefi"].' | '.$_POST["encaminhamento"].' | '.
-        $_POST["possuiDeficiencia"].' | '.$_POST["tipoDeficiencia"].' | '.$_POST["responsavelFamilia"].' | '.$_POST["nomeGenitora"].' | '.$_POST["numeroEndereco"].' | '.
-        $_POST["complementoEndereco"].' | '.$_POST["id"].' | '.$_POST["faixaEtaria"];*/
     }
     else{
         $telefone = $mysqli -> real_escape_string($_POST["telefone"]);

@@ -49,22 +49,18 @@
 			c.faixa_etaria AS 'faixaEtaria',
 			a.ids_dia_semana AS 'diasSemana',
 			a.carga_horaria AS 'cargaHoraria',
-			d.logradouro AS 'logradouro',
+			a.endereco_execucao AS 'logradouro',
 			a.numero_endereco AS 'numeroEndereco',
-			e.nome AS 'nomeTecnico',
-			f.nome_cras as 'crasReferencia'
+			a.nome_tecnico_osc AS 'nomeTecnico',
+			d.nome_cras as 'crasReferencia'
 		FROM
 			dados_grupos a
 		LEFT JOIN dados_osc b ON
 			b.id = a.id_osc
 		LEFT JOIN dados_faixa_etaria c ON
 			c.id = a.id_faixa_etaria
-		LEFT JOIN dados_cep d ON
-			d.id = a.id_cep
-		LEFT JOIN dados_tecnico_osc e ON
-			e.id = a.id_tecnico_osc
-		left join dados_cras f ON
-		f.id=b.id_cras_referencia
+		LEFT JOIN dados_cras d ON
+		d.id=b.id_cras_referencia
 		WHERE
 			a.id = ?;";
 
@@ -294,8 +290,14 @@
 											else {
 												echo '<tr>';
 											}
-								?>
-									<td><button type="button" class="btn edit btn-light btn-sm botao_editar" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-edit"></i></button></td>
+									
+										if($row['status']!="EXCLUIR" && $row['status']!="TRANSFERIDO"){
+											echo '<td><button type="button" class="btn edit btn-light btn-sm botao_editar" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-edit"></i></button></td>';
+										}
+										else{
+											echo '<td></td>';
+										}
+									?>
 									<td style="display:none" class="idAtendido"><?php echo $row['idAtendido'] ?></td>
 									<td style="display:none" class="idAtendidoNoGrupo"><?php echo $row['idAtendidoNoGrupo'] ?></td>
 									<td class="seqAtendido"><?php echo $contador; $contador+=1; ?></td>

@@ -17,17 +17,14 @@
 
         $stmt = $mysqli->prepare("SELECT a.nome_grupo as nomeGrupo,a.com_sem_termo as comSemTermo, a.id_faixa_etaria as idFaixaEtaria, 
                                          a.ids_dia_semana as idsDiaSemana,a.carga_horaria as cargaHoraria, a.endereco_execucao as enderecoExecucao, 
-                                         b.nome as nomeTecnicoOsc
+                                         a.nome_tecnico_osc as nomeTecnicoOsc
                                          
                                          FROM dados_grupos a 
-     
-                                        inner join dados_tecnico_osc b ON
-                                        b.id = a.id_tecnico_osc
         
-                                        WHERE a.id_osc=? and a.id=?");
+                                         WHERE a.id_osc=? and a.id=?");
 
         $stmt->bind_param('ii', $idOSC,$idGrupo);
-
+        
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             $linhas = $resultado ->num_rows;
