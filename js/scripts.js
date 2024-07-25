@@ -1765,77 +1765,104 @@ $('.modal_cpf').change(function () {
         //alert('cpf digitado');
     }
 });
+$('.modal_cpf').keyup(function () {
+    $(this).val(LimparDeixarApenasNumeros($(this).val()));
+});
 // #endregion
 
+$('.modal_nis').keyup(function () {
+    $(this).val(LimparDeixarApenasNumeros($(this).val()));
+});
+
 $(".modal_dataNascimento").keyup(function () {
-    var conteudo;
-    if ($(this).val().length == 2) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "/");
-    }
-    if ($(this).val().length == 5) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "/");
-    }
+    $(this).val(LimparDeixarApenasNumerosEbarra($(this).val()));
+    $(this).val(formatarData($(this).val()));
 });
 $(".modal_dataInclusao").keyup(function () {
-    var conteudo;
-    if ($(this).val().length == 2) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "/");
-    }
-    if ($(this).val().length == 5) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "/");
-    }
+    $(this).val(LimparDeixarApenasNumerosEbarra($(this).val()));
+    $(this).val(formatarData($(this).val()));
 });
 $(".modal_dataDesligamento").keyup(function () {
-    var conteudo;
-    if ($(this).val().length == 2) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "/");
-    }
-    if ($(this).val().length == 5) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "/");
-    }
+    $(this).val(LimparDeixarApenasNumerosEbarra($(this).val()));
+    $(this).val(formatarData($(this).val()));
 });
+
+$(".modal_dataNascimento").change(function () {
+    $(this).val(validarData($(this).val()));
+});
+$(".modal_dataInclusao").change(function () {
+    $(this).val(validarData($(this).val()));
+});
+$(".modal_dataDesligamento").change(function () {
+    $(this).val(validarData($(this).val()));
+});
+
+function formatarData(texto){
+    var conteudo;
+    if (texto.length == 2) {
+        conteudo = texto;
+        texto=conteudo + "/";
+    }
+    if (texto.length == 5) {
+        conteudo = texto;
+        texto=conteudo + "/";
+    }
+    return texto;
+}
+function validarData(texto){
+    if(texto.length<10){
+        alert('Data inválida. Digite a data completa dd/mm/aaaa');
+        return '';
+    }
+    var dia;
+    var mes;
+    var ano;
+
+    dia = parseInt(texto.substring(0,2));
+    mes = parseInt(texto.substring(3,5));
+    ano = parseInt(texto.substring(6,10));
+
+    if(dia<=0 || mes<=0 || ano <=1900 || mes>12){
+        alert('Data inválida.');
+        return '';
+    }
+    switch(mes){
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            if(dia>31){
+                alert('Data inválida.');
+                return '';
+            }
+        case 4: case 6: case 9: case 11:
+            if(dia>30){
+                alert('Data inválida.');
+                return '';
+            }
+        case 2:
+            if(ano%4==0 && ((ano%400==0) || (ano%100!=0))){
+                if(dia>29){
+                    alert('Data inválida.');
+                    return '';
+                }
+            }
+            else{
+                if(dia>28){
+                    alert('Data inválida.');
+                    return '';
+                }
+            }
+    }
+}
 $(".modal_cep").keyup(function () {
     var conteudo;
     if ($(this).val().length == 5) {
         conteudo = $(this).val();
         $(this).val(conteudo + "-");
     }
+    $(this).val(LimparDeixarApenasNumerosEtraco($(this).val()));
 });
 $(".modal_telefone").keyup(function () {
-    var conteudo;
-    var subConteudo;
-    if ($(this).val().length == 1) {
-        conteudo = $(this).val();
-        $(this).val("(" + conteudo);
-    }
-    if ($(this).val().length == 3) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + ")");
-    }
-    if ($(this).val().length == 5) {
-        conteudo = $(this).val();
-        subConteudo = conteudo.substring(0, 4);
-        $(this).val(subConteudo + " " + conteudo.substr(conteudo.length - 1));
-    }
-    if ($(this).val().length == 9) {
-        conteudo = $(this).val();
-        $(this).val(conteudo + "-");
-    }
-    if ($(this).val().length == 11) {
-        conteudo = $(this).val();
-        if (conteudo.charAt(5) == 9) {
-            conteudo = conteudo.replace(/-/, '');
-            subConteudo = conteudo.substring(0, 10);
-            $(this).val(subConteudo + "-");
-        }
-
-    }
+    $(this).val(formatarTelefone($(this).val()));
+    $(this).val(LimparTelefone($(this).val()));
 });
 $('.modal_nis').change(function () {
     //alert('cpf digitado');
@@ -1846,24 +1873,128 @@ function limparTexto(texto) {
     texto = texto.replace(/'/g, '');
     return texto;
 }
-$('.modal_nomeAtendido').change(function () {
+$('.modal_nomeAtendido').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
-$('.modal_adultoParticipante').change(function () {
+$('.modal_adultoParticipante').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
-$('.modal_responsavelFamilia').change(function () {
+$('.modal_responsavelFamilia').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
-$('.modal_nomeGenitora').change(function () {
+$('.modal_nomeGenitora').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
-$('.modal_numeroEndereco').change(function () {
+$('.modal_numeroEndereco').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
-$('.modal_complementoEndereco').change(function () {
+$('.modal_complementoEndereco').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
+$('.modal_nomeOSC').keyup(function () {
+    $(this).val(limparTexto($(this).val()));
+});
+$('.modal_apelidoOSC').keyup(function () {
+    $(this).val(limparTexto($(this).val()));
+});
+$('.modal_cnpj').change(function () {
+    $(this).val(LimparDeixarApenasNumeros($(this).val()));
+});
+
+/*$('.modal_cep').keyup(function () {
+    $(this).val(LimparDeixarApenasNumerosEtraco($(this).val()));
+});*/
+$('.modal_telefoneOSC').keyup(function () {
+    $(this).val(formatarTelefone($(this).val()));
+    $(this).val(LimparTelefone($(this).val()));
+});
+$('.modal_telefonePresidente').keyup(function () {
+    $(this).val(formatarTelefone($(this).val()));
+    $(this).val(LimparTelefone($(this).val()));
+});
+$('.modal_nomeTecnicoOSC').keyup(function () {
+    $(this).val(limparTexto($(this).val()));
+});
+$('.modal_nomeGrupo').keyup(function () {
+    $(this).val(limparTexto($(this).val()));
+});
+$('.modal_cargaHoraria').keyup(function () {
+    $(this).val(deixarMaiusculo($(this).val()));
+});
+$('.modal_enderecoExecucao').keyup(function () {
+    $(this).val(deixarMaiusculo($(this).val()));
+});
+
+function formatarTelefone(texto){
+    var conteudo;
+    var subConteudo;
+    if (texto.length == 1) {
+        conteudo = texto;
+        texto="(" + conteudo;
+    }
+    if (texto.length == 3) {
+        conteudo = texto;
+        $(this).val(conteudo + ")");
+        texto=conteudo + ")";
+    }
+    if (texto.length == 5) {
+        conteudo = texto;
+        subConteudo = conteudo.substring(0, 4);
+        texto=subConteudo + " " + conteudo.substr(conteudo.length - 1);
+    }
+    if (texto.length == 9) {
+        conteudo = texto;
+        texto = conteudo + "-";
+    }
+    if (texto.length == 11) {
+        conteudo = texto;
+        if (conteudo.charAt(5) == 9) {
+            conteudo = conteudo.replace(/-/, '');
+            subConteudo = conteudo.substring(0, 10);
+            texto=subConteudo + "-";
+        }
+
+    }
+    return texto;
+}
+
+function deixarMaiusculo(texto){
+    texto = texto.toUpperCase();
+    return texto;
+}
+
+function LimparDeixarApenasNumeros(texto){
+    const regex = /[^0-9]/g;
+    const str = texto;
+    const subst = '';
+
+    const result = str.replace(regex, subst);
+    return result;
+}
+function LimparTelefone(texto){
+    const regex = /[^0-9-() ]/g;
+    const str = texto;
+    const subst = '';
+
+    const result = str.replace(regex, subst);
+    return result;
+}
+function LimparDeixarApenasNumerosEtraco(texto){
+    const regex = /[^0-9-]/g;
+    const str = texto;
+    const subst = '';
+
+    const result = str.replace(regex, subst);
+    return result;
+}
+function LimparDeixarApenasNumerosEbarra(texto){
+    const regex = /[^0-9\/]/g;
+    const str = texto;
+    const subst = '';
+
+    const result = str.replace(regex, subst);
+    return result;
+}
 
 // #region CLICAR NO BOTÃO SALVAR DO MODAL
 $("#salvarAlteracao").click(function () {
