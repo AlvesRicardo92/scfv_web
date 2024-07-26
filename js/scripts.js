@@ -660,6 +660,7 @@ $(document).ready(function () {
         $('.modal_Grupos').removeAttr("style");
         $('#labelModal_grupos').removeAttr("style");
         $('#staticBackdrop2Label').text("Visualizar Grupos");
+        limparDadosGrupo();
     });
     // #endregion
 
@@ -1709,12 +1710,27 @@ $('#novoGrupo').click(function () {
     $('#salvarGrupo').removeAttr("disabled");
     $('#staticBackdrop2Label').text("Novo Grupo");
     $('#editarGrupo').attr("style", "display:none;");
-    $('modal_Grupos').attr("style", "display:none;");
+    $('.modal_Grupos').attr("style", "display:none;");
     $('#labelModal_grupos').attr("style", "display:none;");
     $("input[type='checkbox']").removeAttr("disabled");
+    limparDadosGrupo();
 });
 // #endregion
 
+function limparDadosGrupo(){
+    $('#rb_comTermo').prop("checked", false);
+    $('#rb_semTermo').prop("checked", false);
+    $('.modal_nomeTecnicoOSC').val("");
+    $('.modal_nomeGrupo').val("");
+    $('.modal_faixaEtaria').val(0);
+    $('#ckbDiaSemana1').prop("checked", false);
+    $('#ckbDiaSemana2').prop("checked", false);
+    $('#ckbDiaSemana3').prop("checked", false);
+    $('#ckbDiaSemana4').prop("checked", false);
+    $('#ckbDiaSemana5').prop("checked", false);
+    $('.modal_cargaHoraria').val("");
+    $('.modal_enderecoExecucao').val("");
+}
 // #region MUDANÇA NO COMBO STATUS
 $('.modal_status').change(function () {
     if ($(this).val() == 5) {
@@ -1893,11 +1909,12 @@ $('.modal_complementoEndereco').keyup(function () {
 });
 $('.modal_nomeOSC').keyup(function () {
     $(this).val(limparTexto($(this).val()));
+    $(this).val(LimparDeixarApenasLetrasEnumeros($(this).val()));
 });
 $('.modal_apelidoOSC').keyup(function () {
     $(this).val(limparTexto($(this).val()));
 });
-$('.modal_cnpj').change(function () {
+$('.modal_cnpj').keyup(function () {
     $(this).val(LimparDeixarApenasNumeros($(this).val()));
 });
 
@@ -1923,6 +1940,10 @@ $('.modal_cargaHoraria').keyup(function () {
 });
 $('.modal_enderecoExecucao').keyup(function () {
     $(this).val(deixarMaiusculo($(this).val()));
+});
+$('.modal_nomePresidente').keyup(function () {
+    $(this).val(limparTexto($(this).val()));
+    $(this).val(LimparDeixarApenasLetrasEnumeros($(this).val()));
 });
 
 function formatarTelefone(texto){
@@ -1989,6 +2010,14 @@ function LimparDeixarApenasNumerosEtraco(texto){
 }
 function LimparDeixarApenasNumerosEbarra(texto){
     const regex = /[^0-9\/]/g;
+    const str = texto;
+    const subst = '';
+
+    const result = str.replace(regex, subst);
+    return result;
+}
+function LimparDeixarApenasLetrasEnumeros(texto){
+    const regex = /[^0-9-^a-z-^A-Z ]/g;
     const str = texto;
     const subst = '';
 

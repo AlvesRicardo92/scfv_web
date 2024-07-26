@@ -3,6 +3,7 @@
 	require "conexaoBanco.php";
 	header('Content-Type: text/html; charset=utf-8');
 	ini_set('default_charset','utf-8');
+	clearstatcache();
 	// Verifica se os dados foram recebidos via POST
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		// Verifica se o campo 'dados' está presente no POST
