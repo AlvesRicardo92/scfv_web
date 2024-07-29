@@ -75,7 +75,7 @@
 				<div class="col-6">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">OSC:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeOSC'] ?>" disabled>
+						<input type="text" class="form-control nome_osc" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeOSC'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-2">
@@ -115,7 +115,7 @@
 				<div class="col-3">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">CRAS DE REF.:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['crasReferencia'] ?>" disabled>
+						<input type="text" class="form-control cras_osc" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['crasReferencia'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-9">
@@ -159,7 +159,7 @@
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="novoAtendido">Cadastrar Novo Atendido</button>
 				</div>
 			</div>
-			<div class="row mb-4">
+			<div class="row mb-2">
 				<div class="col-12">
 					<div class="auto-overflow">
 						<table class="table table-bordered table-hover">
@@ -477,6 +477,11 @@
 					$resultado = $stmt->get_result();
 					while($row = $resultado->fetch_assoc()) { 
 			?>
+			<div class="row">
+				<div class="col-12" style="text-align: right;">
+					<button type="button" class="btn btn-primary" id="downloadCSV">Fazer download</button>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-8">
 					<div class="input-group">

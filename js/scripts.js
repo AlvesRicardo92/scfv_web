@@ -1946,6 +1946,79 @@ $('.modal_nomePresidente').keyup(function () {
     $(this).val(LimparDeixarApenasLetrasEnumeros($(this).val()));
 });
 
+$('#downloadCSV').click(function () {
+    // Variable to store the final csv data
+    let csv_data = [];
+
+    // Get each row data
+    let rows = document.getElementsByTagName('tr');
+    for (let i = 0; i < rows.length; i++) {
+
+        // Get each column data
+        let cols = rows[i].querySelectorAll('td,th');
+
+        // Stores each csv row data
+        let csvrow = [];
+        for (let j = 3; j < cols.length; j++) {
+
+            // Get the text data of each cell of
+            // a row and push it to csvrow
+            csvrow.push(cols[j].innerHTML);
+        }
+
+        // Combine each column value with comma
+        csv_data.push(csvrow.join(";"));
+    }
+    // Combine each row data with new line character
+    csv_data = csv_data.join('\n');
+
+    // Create CSV file object and feed our
+    // csv_data into it
+    CSVFile = new Blob(["\uFEFF"+csv_data], { type: "text/csv; charset=utf-8" });
+
+    // Create to temporary link to initiate
+    // download process
+    let temp_link = document.createElement('a');
+
+    // Download csv file
+    var nomeOSC=$('.nome_osc').val();
+    var crasOSC=$('.cras_osc').val();
+    var data=new Date;
+    var dia=data.getDay();
+    var mes=data.getMonth();
+    var hora=data.getHours();
+    var minuto=data.getMinutes();
+    var segundo=data.getSeconds();
+
+    if(dia<10){
+        dia='0'+dia;
+    }
+    if(mes<10){
+        mes='0'+mes;
+    }
+    if(hora<10){
+        hora='0'+hora;
+    }
+    if(minuto<10){
+        minuto='0'+minuto;
+    }
+    if(segundo<10){
+        segundo='0'+segundo;
+    }
+    var dataHora=dia+'_'+mes+'_'+data.getFullYear()+' '+hora+minuto+segundo;
+
+    temp_link.download = nomeOSC+' - '+crasOSC+' - '+ dataHora+'.csv';
+    let url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
+
+    // This link should not be displayed
+    temp_link.style.display = "none";
+    document.body.appendChild(temp_link);
+
+    // Automatically click the link to trigger download 
+    temp_link.click();
+    document.body.removeChild(temp_link);
+});
 function formatarTelefone(texto){
     var conteudo;
     var subConteudo;
