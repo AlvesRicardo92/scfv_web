@@ -155,7 +155,7 @@
 								<div class="col-md-4 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Telefone:</span>
-										<input type="text" class="form-control modal_telefoneOSC" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="15">
+										<input type="text" class="form-control modal_telefoneOSC" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 								<div class="col-md-4 ">
@@ -212,7 +212,7 @@
 								<div class="col-md-5 ">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Telefone do Presidente da OSC:</span>
-										<input type="text" class="form-control modal_telefonePresidente" id="basic-url" aria-describedby="basic-addon3" value="" maxlength="15">
+										<input type="text" class="form-control modal_telefonePresidente" id="basic-url" aria-describedby="basic-addon3" value="">
 									</div>
 								</div>
 							</div>

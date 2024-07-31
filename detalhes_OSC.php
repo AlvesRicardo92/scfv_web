@@ -134,7 +134,7 @@
 				$resultado->free_result();
 				$stmt->close();
 			?>
-			<div class="row mb-4">
+			<div class="row mb-2">
 				<div class="col-12">
 					<div class="auto-overflow">
 						<table class="table table-bordered table-light table-hover">
@@ -154,7 +154,7 @@
 							<tbody>
 								<?php 
 									//$sql= "SELECT a.id as 'id', a.nome_grupo as 'nome',a.numero_grupo as 'numeroGrupo',b.faixa_etaria as 'faixaEtaria',a.ids_dia_semana as 'diasSemana',a.carga_horaria as 'cargaHoraria',c.logradouro as 'logradouro',a.numero_endereco as 'numero',d.nome as 'tecnicoOSC' FROM dados_grupos a 
-									$sql= "SELECT a.id as 'id', a.nome_grupo as 'nome',a.numero_grupo as 'numeroGrupo',b.faixa_etaria as 'faixaEtaria',a.ids_dia_semana as 'diasSemana',a.carga_horaria as 'cargaHoraria',a.endereco_execucao as enderecoExecucao,a.nome_tecnico_osc as 'tecnicoOSC' FROM dados_grupos a 
+									$sql= "SELECT a.id as 'id', a.nome_grupo as 'nome',a.com_sem_termo as 'comSemTermo',a.numero_grupo as 'numeroGrupo',b.faixa_etaria as 'faixaEtaria',a.ids_dia_semana as 'diasSemana',a.carga_horaria as 'cargaHoraria',a.endereco_execucao as enderecoExecucao,a.nome_tecnico_osc as 'tecnicoOSC' FROM dados_grupos a 
 
 									inner join dados_faixa_etaria b ON
 									b.id = a.id_faixa_etaria
@@ -169,7 +169,7 @@
 								<tr>
 									<td><button type="button" class="btn edit btn-outline-primary btn-sm visualizarGrupo"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
 									<td style="display:none" class="idGrupo"><?php echo $row['id'] ?></td>
-									<td><?php echo $row['numeroGrupo'] ?></td>
+									<td><?php echo $row['comSemTermo'].' '.$row['numeroGrupo'] ?></td>
 									<td><?php echo $row['tecnicoOSC'] ?></td>
 									<td><?php echo $row['nome'] ?></td>
 									<td><?php echo $row['faixaEtaria'] ?></td>
@@ -186,6 +186,11 @@
 							</tbody>
 						</table>
 					</div>	
+				</div>
+			</div>
+			<div class="row mb-2">
+				<div class="col-12" style="text-align:right;">
+					<button type="button" class="btn btn-primary" id="downloadCSV">Fazer download</button>
 				</div>
 			</div>
 		</div>
