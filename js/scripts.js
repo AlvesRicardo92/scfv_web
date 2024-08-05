@@ -2019,6 +2019,17 @@ $('#downloadCSV').click(function () {
     temp_link.click();
     document.body.removeChild(temp_link);
 });
+
+$('#downloadExcel').click(function () {
+    $("#form-excel input[name='nomeOSC']").val($('.nome_OSC').val());
+    $("#form-excel input[name='nomeCRAS']").val($('.nomeCRAS').val());
+    $("#form-excel").submit();
+});
+$('#downloadTodosExcel').click(function () {
+    $("#form-todos-excel").submit();
+});
+
+
 function formatarTelefone(texto){
     var conteudo;
     var subConteudo;

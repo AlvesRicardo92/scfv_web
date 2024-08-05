@@ -60,7 +60,7 @@
 				<div class="col-9">
 					<div class="input-group">
 						<span class="input-group-text blue-cell largura-50" id="basic-addon3">NOME DA ENTIDADE SOCIOASSISTENCIAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nome']?>" disabled>
+						<input type="text" class="form-control nome_OSC" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nome']?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -116,7 +116,7 @@
 				<div class="col-9">
 					<div class="input-group">
 						<span class="input-group-text blue-cell largura-50" id="basic-addon3">CRAS DE REFERÊNCIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['cras'] ?>" disabled>
+						<input type="text" class="form-control nomeCRAS" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['cras'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -190,13 +190,17 @@
 			</div>
 			<div class="row mb-2">
 				<div class="col-12" style="text-align:right;">
-					<button type="button" class="btn btn-primary" id="downloadCSV">Fazer download</button>
+					<button type="button" class="btn btn-primary" id="downloadExcel">Fazer download</button>
 				</div>
 			</div>
 		</div>
 		<form id="form-dados" action="detalhes_grupo.php" method="post" style="display: none;">
 			<input type="hidden" name="idGrupo">
 			<input type="hidden" name="idosc">
+		</form>
+		<form id="form-excel" action="downloadExcelUmaOSC.php" method="post" style="display: none;">
+			<input type="hidden" name="nomeOSC">
+			<input type="hidden" name="nomeCRAS">
 		</form>
 		<!-- Bootstrap Bundle com Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

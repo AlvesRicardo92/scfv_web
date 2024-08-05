@@ -78,7 +78,14 @@
 						</table>
 					</div>	
 				</div>
-            </div>			
+            </div>	
+			<div class="row mb-2">
+				<div class="col-12" style="text-align:right;">
+					<button type="button" class="btn btn-primary" id="downloadTodosExcel">Fazer download</button>
+				</div>
+			</div>
+			<form id="form-todos-excel" action="downloadExcelTodasOSCs.php" method="post" style="display: none;">
+			</form>	
 		</div>
 		<!-- Modal Dados OSC-->
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
