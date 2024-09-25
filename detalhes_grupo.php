@@ -162,7 +162,7 @@
 			<div class="row mb-2">
 				<div class="col-12">
 					<div class="auto-overflow">
-						<table class="table table-bordered table-hover tabelaAtendidos">
+						<table class="table table-bordered table-hover" id="tabelaAtendidos">
 							<thead>
 								<tr>
 									<th scope="col" style="background-color:rgb(79, 134, 236);font-size: 12px;">EDITAR</th>

@@ -2052,7 +2052,7 @@ $('#imprimirGrupo').click(function () {
                $('.chSemanal').val()+"|"+$('.cras_osc').val()+"|"+$('.tecnicoCras').val()+"|"+$('.localExecucao').val();
 
     // Seleciona a tabela
-    var tabela = document.getElementById("minhaTabela");
+    var tabela = document.getElementById("tabelaAtendidos");
 
     // Pega todas as linhas do corpo da tabela (tbody)
     var linhas = tabela.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
@@ -2062,7 +2062,7 @@ $('#imprimirGrupo').click(function () {
         if(linhas[i].getElementsByTagName("td")[15].innerText!= "EXCLUIR" && linhas[i].getElementsByTagName("td")[15].innerText!= "TRANSFERIDO"){
             dados += linhas[i].getElementsByTagName("td")[3].innerText +"|"+ linhas[i].getElementsByTagName("td")[4].innerText +"|"+ 
                  linhas[i].getElementsByTagName("td")[5].innerText +"|"+ linhas[i].getElementsByTagName("td")[6].innerText +"|"+ 
-                 linhas[i].getElementsByTagName("td")[14].innerText +"|"+ linhas[i].getElementsByTagName("td")[25].innerText;
+                 linhas[i].getElementsByTagName("td")[14].innerText +"|"+ linhas[i].getElementsByTagName("td")[25].innerText+"|FIM|";
         }
         
     }

@@ -49,83 +49,12 @@ td{
 }
 
 @media print {
-  /*.tabelaAtendidos th:nth-child(0),
-  .tabelaAtendidos th:nth-child(1), 
-  .tabelaAtendidos th:nth-child(2),
-  .tabelaAtendidos th:nth-child(7),
-  .tabelaAtendidos th:nth-child(8),
-  .tabelaAtendidos th:nth-child(9), 
-  .tabelaAtendidos th:nth-child(10),
-  .tabelaAtendidos th:nth-child(11),
-  .tabelaAtendidos th:nth-child(12),
-  .tabelaAtendidos th:nth-child(13), 
-  .tabelaAtendidos th:nth-child(15),
-  .tabelaAtendidos th:nth-child(16),
-  .tabelaAtendidos th:nth-child(17),
-  .tabelaAtendidos th:nth-child(18), 
-  .tabelaAtendidos th:nth-child(19),
-  .tabelaAtendidos th:nth-child(20),
-  .tabelaAtendidos th:nth-child(21),
-  .tabelaAtendidos th:nth-child(22), 
-  .tabelaAtendidos th:nth-child(23),
-  .tabelaAtendidos th:nth-child(24),
-  .tabelaAtendidos th:nth-child(26),
-  .tabelaAtendidos th:nth-child(27), 
-  .tabelaAtendidos th:nth-child(28),
-  .tabelaAtendidos th:nth-child(29),
-  .tabelaAtendidos th:nth-child(30),
-  .tabelaAtendidos th:nth-child(31),
-  .tabelaAtendidos th:nth-child(32),
-  .tabelaAtendidos td:nth-child(0),
-  .tabelaAtendidos td:nth-child(1), 
-  .tabelaAtendidos td:nth-child(2),
-  .tabelaAtendidos td:nth-child(7),
-  .tabelaAtendidos td:nth-child(8),
-  .tabelaAtendidos td:nth-child(9), 
-  .tabelaAtendidos td:nth-child(10),
-  .tabelaAtendidos td:nth-child(11),
-  .tabelaAtendidos td:nth-child(12),
-  .tabelaAtendidos td:nth-child(13), 
-  .tabelaAtendidos td:nth-child(15),
-  .tabelaAtendidos td:nth-child(16),
-  .tabelaAtendidos td:nth-child(17),
-  .tabelaAtendidos td:nth-child(18), 
-  .tabelaAtendidos td:nth-child(19),
-  .tabelaAtendidos td:nth-child(20),
-  .tabelaAtendidos td:nth-child(21),
-  .tabelaAtendidos td:nth-child(22), 
-  .tabelaAtendidos td:nth-child(23),
-  .tabelaAtendidos td:nth-child(24),
-  .tabelaAtendidos td:nth-child(26),
-  .tabelaAtendidos td:nth-child(27), 
-  .tabelaAtendidos td:nth-child(28),
-  .tabelaAtendidos td:nth-child(29),
-  .tabelaAtendidos td:nth-child(30),
-  .tabelaAtendidos td:nth-child(31),
-  .tabelaAtendidos td:nth-child(32),
-  .navbar,
-  .mesReferencia,
-  .btnVoltar,
-  #novoAtendido,
-  #imprimirGrupo,
-  .tabelaAtendidos tr:has(td:nth-child(14):contains("EXCLUIR")),
-  .tabelaAtendidos tr:has(td:nth-child(14):contains("TRANSFERIDO")){
-      display: none;
-  }
-
-  .campoAssinatura{
-    display:block;
-  }*/
   /* Define a orientação da impressão como paisagem */
   @page {
     size: A4 landscape; /* Folha no modo paisagem */
     margin: 5mm; /* Margens mínimas */
-  } 
-
-  /* Escala de 60% */
-  body {
-      /*transform: scale(0.6);
-      transform-origin: top left;
-      width: 166,66%;*/
+  }
+  #btnVoltar {
+    display: none;
   }
 }
