@@ -1776,10 +1776,18 @@ $('.modal_possuiDeficiencia').change(function () {
 // #endregion
 
 // #region VERIFICAÇÃO APÓS DIGITAR O CPF
-$('.modal_cpf').change(function () {
-    if ($(this).val().length > 3) {
-        //alert('cpf digitado');
+$('.modal_cpf').blur(function () {
+    if ($(this).val().length !=11) {
+        alert('CPF ínválido');
+        $(this).val('');
     }
+    else{
+        if(!validarCPF($(this).val())){
+            alert("CPF inválido");
+            $(this).val('');
+        }        
+    }
+    
 });
 $('.modal_cpf').keyup(function () {
     $(this).val(LimparDeixarApenasNumeros($(this).val()));
@@ -1794,6 +1802,18 @@ $(".modal_dataNascimento").keyup(function () {
     $(this).val(LimparDeixarApenasNumerosEbarra($(this).val()));
     $(this).val(formatarData($(this).val()));
 });
+
+$(".modal_dataNascimento").change(function () {
+    //validar data
+});
+$(".modal_dataInclusao").change(function () {
+    //validar data
+});
+$(".modal_dataDesligamento").change(function () {
+    //validar data
+});
+
+
 $(".modal_dataInclusao").keyup(function () {
     $(this).val(LimparDeixarApenasNumerosEbarra($(this).val()));
     $(this).val(formatarData($(this).val()));
@@ -1880,8 +1900,19 @@ $(".modal_telefone").keyup(function () {
     $(this).val(formatarTelefone($(this).val()));
     $(this).val(LimparTelefone($(this).val()));
 });
-$('.modal_nis').change(function () {
-    //alert('cpf digitado');
+
+$(".modal_nis").blur(function () {
+    if ($(this).val().length !=11) {
+        alert("NIS inválido");
+        $(this).val('');
+    }
+    else{
+        if(!validarNIS($(this).val())){
+            alert("NIS inválido");
+            $(this).val('');
+        }
+        
+    }
 });
 function limparTexto(texto) {
     texto = texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -1946,8 +1977,16 @@ $('.modal_nomePresidente').keyup(function () {
     $(this).val(LimparDeixarApenasLetrasEnumeros($(this).val()));
 });
 
-$('#downloadCSV').click(function () {
-    // Variable to store the final csv data
+$('.modal_cnpj').blur(function () {
+    if(!validarCNPJ($(this).val())){
+        alert("CNPJ inválido");
+        $('.modal_cnpj').val('');
+    }
+});
+
+$('#imprimirGrupo').click(function () {
+    
+    /*// Variable to store the final csv data
     let csv_data = [];
 
     // Get each row data
@@ -2017,7 +2056,7 @@ $('#downloadCSV').click(function () {
 
     // Automatically click the link to trigger download 
     temp_link.click();
-    document.body.removeChild(temp_link);
+    document.body.removeChild(temp_link);*/
 });
 
 $('#downloadExcel').click(function () {
@@ -2598,6 +2637,145 @@ $("#salvarAlteracao").click(function () {
     }
     // #endregion
 });
+// #endregion
+
+// #region VALIDAR CNPJ
+function validarCNPJ(cnpj) {
+ 
+    cnpj = cnpj.replace(/[^\d]+/g,'');
+ 
+    if(cnpj == '') return false;
+     
+    if (cnpj.length != 14)
+        return false;
+ 
+    // Elimina CNPJs invalidos conhecidos
+    if (cnpj == "00000000000000" || 
+        cnpj == "11111111111111" || 
+        cnpj == "22222222222222" || 
+        cnpj == "33333333333333" || 
+        cnpj == "44444444444444" || 
+        cnpj == "55555555555555" || 
+        cnpj == "66666666666666" || 
+        cnpj == "77777777777777" || 
+        cnpj == "88888888888888" || 
+        cnpj == "99999999999999")
+        return false;
+         
+    // Valida DVs
+    tamanho = cnpj.length - 2
+    numeros = cnpj.substring(0,tamanho);
+    digitos = cnpj.substring(tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+            pos = 9;
+    }
+    resultado1 = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    //if (resultado != digitos.charAt(0))
+    //    return false;
+         
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0,tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+            pos = 9;
+    }
+    resultado2 = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    digitosEncontrados=resultado1.toString()+resultado2.toString();
+    digitosDigitados=cnpj.substring(12, 14);
+    if (digitosEncontrados != digitosDigitados){
+        return false;
+    } 
+    else{
+        return true;
+    }    
+}
+// #endregion
+
+// #region VALIDAR CPF
+function validarCPF(strCPF) {
+    var soma;
+    var resto1;
+    var resto2;
+    var digitosEncontrados;
+    var digitosDigitados;
+    soma = 0;
+    if(strCPF == "00000000000" || strCPF == "11111111111" || strCPF == "22222222222" || strCPF == "33333333333" || strCPF == "44444444444" || strCPF == "55555555555" ||
+      strCPF == "66666666666" || strCPF == "77777777777" || strCPF == "88888888888" || strCPF == "99999999999" ) {
+        return false;
+    }
+
+    for (i=1; i<=9; i++) soma = soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+    resto1 = (soma * 10) % 11;
+
+    if ((resto1 == 10) || (resto1 == 11))  resto = 0;
+    //if (resto != parseInt(strCPF.substring(9, 10)) ) return false;
+
+    soma = 0;
+    for (i = 1; i <= 10; i++) soma = soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+    resto2 = (soma * 10) % 11;
+
+    if ((resto2 == 10) || (resto2 == 11))  resto2 = 0;
+    digitosEncontrados=resto1.toString()+resto2.toString();
+    digitosDigitados=strCPF.substring(9, 11);
+    if (digitosEncontrados != digitosDigitados){
+        return false;
+    } 
+    else{
+        return true;
+    }
+    
+}
+// #endregion
+
+
+// #region VALIDAR NIS
+function validarNIS(nis) {
+    var multiplicadorBase = "3298765432";
+    var total = 0;
+    var resto = 0;
+    var multiplicando = 0;
+    var multiplicador = 0;
+    var digito = 99;
+    
+    // Retira a mascara
+    var numeroNIS = nis.replace(/[^\d]+/g, '');
+
+    if (numeroNIS.length !== 11 || 
+        numeroNIS === "00000000000" || 
+        numeroNIS === "11111111111" || 
+        numeroNIS === "22222222222" || 
+        numeroNIS === "33333333333" || 
+        numeroNIS === "44444444444" || 
+        numeroNIS === "55555555555" || 
+        numeroNIS === "66666666666" || 
+        numeroNIS === "77777777777" || 
+        numeroNIS === "88888888888" || 
+        numeroNIS === "99999999999") {
+        return false;
+    } else {
+        for (var i = 0; i < 10; i++) {
+            multiplicando = parseInt( numeroNIS.substring( i, i + 1 ) );
+            multiplicador = parseInt( multiplicadorBase.substring( i, i + 1 ) );
+            total += multiplicando * multiplicador;
+        }
+
+        resto = 11 - total % 11;
+        resto = resto === 10 || resto === 11 ? 0 : resto;
+
+        digito = parseInt("" + numeroNIS.charAt(10));
+        if (resto != digito){
+            return false;
+        }
+        return true;
+    }
+}
 // #endregion
 
 // #region BUSCAR ENDEREÇO PELO CEP

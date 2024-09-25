@@ -479,7 +479,7 @@
 			?>
 			<div class="row">
 				<div class="col-12" style="text-align: right;">
-					<button type="button" class="btn btn-primary" id="downloadCSV">Fazer download</button>
+					<button type="button" class="btn btn-primary" id="imprimirGrupo">Imprimir</button>
 				</div>
 			</div>
 			<div class="row">
