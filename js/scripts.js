@@ -1457,6 +1457,66 @@ $(document).ready(function () {
         $('.modal_complementoEndereco').val(complementoEndereco);
     });
     // #endregion
+    // Função para aplicar as alterações antes de imprimir
+    $(window).on('beforeprint', function() {
+        // Esconder colunas específicas (cabeçalhos e dados)
+        $('.tabelaAtendidos th:nth-child(0), .tabelaAtendidos td:nth-child(0),'
+        + '.tabelaAtendidos th:nth-child(1), .tabelaAtendidos td:nth-child(1),'
+        + '.tabelaAtendidos th:nth-child(2), .tabelaAtendidos td:nth-child(2),'
+        + '.tabelaAtendidos th:nth-child(7), .tabelaAtendidos td:nth-child(7),'
+        + '.tabelaAtendidos th:nth-child(8), .tabelaAtendidos td:nth-child(8),'
+        + '.tabelaAtendidos th:nth-child(9), .tabelaAtendidos td:nth-child(9),'
+        + '.tabelaAtendidos th:nth-child(10), .tabelaAtendidos td:nth-child(10),'
+        + '.tabelaAtendidos th:nth-child(11), .tabelaAtendidos td:nth-child(11),'
+        + '.tabelaAtendidos th:nth-child(12), .tabelaAtendidos td:nth-child(12),'
+        + '.tabelaAtendidos th:nth-child(13), .tabelaAtendidos td:nth-child(13),'
+        + '.tabelaAtendidos th:nth-child(15), .tabelaAtendidos td:nth-child(15),'
+        + '.tabelaAtendidos th:nth-child(16), .tabelaAtendidos td:nth-child(16),'
+        + '.tabelaAtendidos th:nth-child(17), .tabelaAtendidos td:nth-child(17),'
+        + '.tabelaAtendidos th:nth-child(18), .tabelaAtendidos td:nth-child(18),'
+        + '.tabelaAtendidos th:nth-child(19), .tabelaAtendidos td:nth-child(19),'
+        + '.tabelaAtendidos th:nth-child(20), .tabelaAtendidos td:nth-child(20),'
+        + '.tabelaAtendidos th:nth-child(21), .tabelaAtendidos td:nth-child(21),'
+        + '.tabelaAtendidos th:nth-child(22), .tabelaAtendidos td:nth-child(22),'
+        + '.tabelaAtendidos th:nth-child(23), .tabelaAtendidos td:nth-child(23),'
+        + '.tabelaAtendidos th:nth-child(24), .tabelaAtendidos td:nth-child(24),'
+        + '.tabelaAtendidos th:nth-child(26), .tabelaAtendidos td:nth-child(26),'
+        + '.tabelaAtendidos th:nth-child(27), .tabelaAtendidos td:nth-child(27),'
+        + '.tabelaAtendidos th:nth-child(28), .tabelaAtendidos td:nth-child(28),'
+        + '.tabelaAtendidos th:nth-child(29), .tabelaAtendidos td:nth-child(29),'
+        + '.tabelaAtendidos th:nth-child(30), .tabelaAtendidos td:nth-child(30),'
+        + '.tabelaAtendidos th:nth-child(31), .tabelaAtendidos td:nth-child(31),'
+        + '.tabelaAtendidos th:nth-child(32), .tabelaAtendidos td:nth-child(32)'
+        ).hide();
+
+        $('.tabelaAtendidos th:nth-child(4), .tabelaAtendidos td:nth-child(4)').show();
+
+        // Esconder navbar e outros elementos específicos
+        $('.navbar, .mesReferencia, .btnVoltar, #novoAtendido, #imprimirGrupo').hide();
+
+        // Esconder linhas baseadas no conteúdo da coluna 14
+        $('.tabelaAtendidos tbody tr').each(function() {
+            var status = $(this).find('td:nth-child(15)').text();
+            if (status === 'EXCLUIR' || status === 'TRANSFERIDO') {
+                $(this).hide();
+            }
+        });
+
+        // Mostrar campoAssinatura durante a impressão
+        $('.campoAssinatura').show();
+    });
+
+    // Função para reverter as alterações após a impressão
+    $(window).on('afterprint', function() {
+        // Mostrar todas as colunas de volta
+        $('.tabelaAtendidos th, .tabelaAtendidos td').show();
+        $('.tabelaAtendidos th:nth-child(2), .tabelaAtendidos td:nth-child(2),'
+        + '.tabelaAtendidos th:nth-child(3), .tabelaAtendidos td:nth-child(3)'
+        ).hide();
+
+        // Mostrar elementos que foram escondidos
+        $('.navbar, .mesReferencia, .btnVoltar, #novoAtendido, #imprimirGrupo').show();
+    });
 });
 // #endregion
 
@@ -1803,14 +1863,23 @@ $(".modal_dataNascimento").keyup(function () {
     $(this).val(formatarData($(this).val()));
 });
 
-$(".modal_dataNascimento").change(function () {
-    //validar data
+$(".modal_dataNascimento").blur(function () {
+    if(!validarData($(this).val())){
+        alert('Data inválida');
+        $(this).val('');
+    }
 });
-$(".modal_dataInclusao").change(function () {
-    //validar data
+$(".modal_dataInclusao").blur(function () {
+    if(!validarData($(this).val())){
+        alert('Data inválida');
+        $(this).val('');
+    }
 });
-$(".modal_dataDesligamento").change(function () {
-    //validar data
+$(".modal_dataDesligamento").blur(function () {
+    if(!validarData($(this).val())){
+        alert('Data inválida');
+        $(this).val('');
+    }
 });
 
 
@@ -1821,16 +1890,6 @@ $(".modal_dataInclusao").keyup(function () {
 $(".modal_dataDesligamento").keyup(function () {
     $(this).val(LimparDeixarApenasNumerosEbarra($(this).val()));
     $(this).val(formatarData($(this).val()));
-});
-
-$(".modal_dataNascimento").change(function () {
-    $(this).val(validarData($(this).val()));
-});
-$(".modal_dataInclusao").change(function () {
-    $(this).val(validarData($(this).val()));
-});
-$(".modal_dataDesligamento").change(function () {
-    $(this).val(validarData($(this).val()));
 });
 
 function formatarData(texto){
@@ -1845,7 +1904,7 @@ function formatarData(texto){
     }
     return texto;
 }
-function validarData(texto){
+/*function validarData(texto){
     if(texto.length<10){
         alert('Data inválida. Digite a data completa dd/mm/aaaa');
         return '';
@@ -1887,7 +1946,7 @@ function validarData(texto){
                 }
             }
     }
-}
+}*/
 $(".modal_cep").keyup(function () {
     var conteudo;
     if ($(this).val().length == 5) {
@@ -1985,78 +2044,37 @@ $('.modal_cnpj').blur(function () {
 });
 
 $('#imprimirGrupo').click(function () {
-    
-    /*// Variable to store the final csv data
-    let csv_data = [];
+    var cabecalho;
+    var dados;
+    var rodape;
 
-    // Get each row data
-    let rows = document.getElementsByTagName('tr');
-    for (let i = 0; i < rows.length; i++) {
+    cabecalho= $('.nome_osc').val()+"|"+$('.numeroGrupo').val()+"|"+$('.diasSemana').val()+"|"+$('.faixaEtaria').val()+"|"+$('.nomeGrupo').val()+"|"+
+               $('.chSemanal').val()+"|"+$('.cras_osc').val()+"|"+$('.tecnicoCras').val()+"|"+$('.localExecucao').val();
 
-        // Get each column data
-        let cols = rows[i].querySelectorAll('td,th');
+    // Seleciona a tabela
+    var tabela = document.getElementById("minhaTabela");
 
-        // Stores each csv row data
-        let csvrow = [];
-        for (let j = 3; j < cols.length; j++) {
+    // Pega todas as linhas do corpo da tabela (tbody)
+    var linhas = tabela.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
-            // Get the text data of each cell of
-            // a row and push it to csvrow
-            csvrow.push(cols[j].innerHTML);
+    // Usa um for loop tradicional para percorrer as linhas
+    for (var i = 0; i < linhas.length; i++) {
+        if(linhas[i].getElementsByTagName("td")[15].innerText!= "EXCLUIR" && linhas[i].getElementsByTagName("td")[15].innerText!= "TRANSFERIDO"){
+            dados += linhas[i].getElementsByTagName("td")[3].innerText +"|"+ linhas[i].getElementsByTagName("td")[4].innerText +"|"+ 
+                 linhas[i].getElementsByTagName("td")[5].innerText +"|"+ linhas[i].getElementsByTagName("td")[6].innerText +"|"+ 
+                 linhas[i].getElementsByTagName("td")[14].innerText +"|"+ linhas[i].getElementsByTagName("td")[25].innerText;
         }
-
-        // Combine each column value with comma
-        csv_data.push(csvrow.join(";"));
+        
     }
-    // Combine each row data with new line character
-    csv_data = csv_data.join('\n');
 
-    // Create CSV file object and feed our
-    // csv_data into it
-    CSVFile = new Blob(["\uFEFF"+csv_data], { type: "text/csv; charset=utf-8" });
+    rodape=$('.totalAtendidos').val()+"|"+$('.comNIS').val()+"|"+$('.referenciadosCRAS').val()+"|"+$('.paifPaefi').val()+"|"+$('.foraSituacaoPrioritaria').val()+"|"+"|"+$('.situacaoPrioritaria').val()+"|"+
+           $('.deficiencia').val()+"|"+$('.autismo').val()+"|"+$('.fisica').val()+"|"+$('.intelectual').val()+"|"+$('.mental').val()+"|"+"|"+$('.sensorial').val();
 
-    // Create to temporary link to initiate
-    // download process
-    let temp_link = document.createElement('a');
-
-    // Download csv file
-    var nomeOSC=$('.nome_osc').val();
-    var crasOSC=$('.cras_osc').val();
-    var data=new Date;
-    var dia=data.getDay();
-    var mes=data.getMonth();
-    var hora=data.getHours();
-    var minuto=data.getMinutes();
-    var segundo=data.getSeconds();
-
-    if(dia<10){
-        dia='0'+dia;
-    }
-    if(mes<10){
-        mes='0'+mes;
-    }
-    if(hora<10){
-        hora='0'+hora;
-    }
-    if(minuto<10){
-        minuto='0'+minuto;
-    }
-    if(segundo<10){
-        segundo='0'+segundo;
-    }
-    var dataHora=dia+'_'+mes+'_'+data.getFullYear()+' '+hora+minuto+segundo;
-
-    temp_link.download = nomeOSC+' - '+crasOSC+' - '+ dataHora+'.csv';
-    let url = window.URL.createObjectURL(CSVFile);
-    temp_link.href = url;
-
-    // This link should not be displayed
-    temp_link.style.display = "none";
-    document.body.appendChild(temp_link);
-
-    // Automatically click the link to trigger download 
-    temp_link.click();
-    document.body.removeChild(temp_link);*/
+    $("#form-impressao input[name='cabecalho']").val(cabecalho);
+    $("#form-impressao input[name='dados']").val(dados);
+    $("#form-impressao input[name='rodape']").val(rodape);
+    // Submete o formulário
+    $("#form-impressao").submit();
 });
 
 $('#downloadExcel').click(function () {
@@ -2734,7 +2752,6 @@ function validarCPF(strCPF) {
 }
 // #endregion
 
-
 // #region VALIDAR NIS
 function validarNIS(nis) {
     var multiplicadorBase = "3298765432";
@@ -2775,6 +2792,50 @@ function validarNIS(nis) {
         }
         return true;
     }
+}
+// #endregion
+
+// #region VALIDAR DATA
+function validarData(data) {
+    // Expressão regular para verificar o formato dd/MM/yyyy
+    var pattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+
+    // Verifica se a data está no formato correto
+    if (!pattern.test(data)) {
+        return false;
+    }
+
+    // Divide a data em dia, mês e ano
+    var parts = data.split('/');
+    var dia = parseInt(parts[0], 10);
+    var mes = parseInt(parts[1], 10);
+    var ano = parseInt(parts[2], 10);
+
+    // Verifica se os valores são válidos
+    if (mes < 1 || mes > 12) {
+        return false; // Mês inválido
+    }
+    if (dia < 1 || dia > 31) {
+        return false; // Dia inválido
+    }
+    if(ano<1900){
+        return false; // Ano inválido
+    }
+
+    // Verifica a validade dos dias por mês
+    var diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Verifica se o ano é bissexto e ajusta o número de dias de fevereiro
+    if (ano % 4 === 0 && (ano % 100 !== 0 || ano % 400 === 0)) {
+        diasPorMes[1] = 29; // Fevereiro tem 29 dias em anos bissextos
+    }
+
+    // Verifica se o dia é válido para o mês específico
+    if (dia > diasPorMes[mes - 1]) {
+        return false;
+    }
+
+    return true;
 }
 // #endregion
 

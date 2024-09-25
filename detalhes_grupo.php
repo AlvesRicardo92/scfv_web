@@ -81,13 +81,13 @@
 				<div class="col-2">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">GRUPO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['numeroGrupo'] ?>" disabled>
+						<input type="text" class="form-control numeroGrupo" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['numeroGrupo'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">DIAS DA SEMANA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['diasSemana'] ?>" disabled>
+						<input type="text" class="form-control diasSemana" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['diasSemana'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -101,13 +101,13 @@
 				<div class="col-3">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">NOME DO GRUPO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeGrupo'] ?>" disabled>
+						<input type="text" class="form-control nomeGrupo" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeGrupo'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">CARGA HORÁRiA SEMANAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['cargaHoraria'] ?>" disabled>
+						<input type="text" class="form-control chSemanal" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['cargaHoraria'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -121,7 +121,7 @@
 				<div class="col-9">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">TÉCNICO DE REF. DO CRAS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeTecnico'] ?>" disabled>
+						<input type="text" class="form-control tecnicoCras" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeTecnico'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -129,11 +129,11 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">LOCAL DE EXECUÇÃO DO SERVIÇO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['logradouro'].', '.$row['numeroEndereco'] ?>" disabled>
+						<input type="text" class="form-control localExecucao" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['logradouro'].', '.$row['numeroEndereco'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
-					<div class="input-group mb-3">
+					<div class="input-group mb-3 mesReferencia">
 						<label class="input-group-text blue-cell" for="inputGroupSelect01">MÊS/ANO DE REF.</label>
 						<select class="form-select" id="inputGroupSelect01">
 						<option selected>Selecione...</option>
@@ -153,7 +153,7 @@
 			<div class="row mb-4">
 				<div class="col-9">
 					<!--<button type="button" class="btn btn-primary" id="voltarDetalheOSC">Voltar</button>-->
-					<a href="detalhes_OSC.php" class="btn btn-primary">Voltar</a>
+					<a href="detalhes_OSC.php" class="btn btn-primary btnVoltar">Voltar</a>
 				</div>
 				<div class="col-3" style="text-align: right;">
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="novoAtendido">Cadastrar Novo Atendido</button>
@@ -162,7 +162,7 @@
 			<div class="row mb-2">
 				<div class="col-12">
 					<div class="auto-overflow">
-						<table class="table table-bordered table-hover">
+						<table class="table table-bordered table-hover tabelaAtendidos">
 							<thead>
 								<tr>
 									<th scope="col" style="background-color:rgb(79, 134, 236);font-size: 12px;">EDITAR</th>
@@ -486,7 +486,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">TOTAL DE ATENDIDOS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalAtendidos']-$row['totalExcluidos']-$row['totalTransferidos'] ?>" disabled>
+						<input type="text" class="form-control totalAtendidos" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalAtendidos']-$row['totalExcluidos']-$row['totalTransferidos'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -494,7 +494,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">NIS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalNis'] ?>" disabled>
+						<input type="text" class="form-control comNIS" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalNis'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -502,7 +502,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219)">REFERENCIADOS NO CRAS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalReferenciadoCras'] ?>" disabled>
+						<input type="text" class="form-control referenciadosCRAS" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalReferenciadoCras'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -510,7 +510,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">PAIF / PAEFI / NENHUM DOS DOIS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalPaif']." / ".$row['totalPaefi']." / ".$row['totalNaoPaifPaefi'] ?>" disabled>
+						<input type="text" class="form-control paifPaefi" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalPaif']." / ".$row['totalPaefi']." / ".$row['totalNaoPaifPaefi'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -518,7 +518,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">QUANTIDADE FORA DE SITUAÇÃO PRIORITÁRIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalForaSituacaoPrioritaria'] ?>" disabled>
+						<input type="text" class="form-control foraSituacaoPrioritaria" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalForaSituacaoPrioritaria'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -526,7 +526,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">QUANTIDADE EM SITUAÇÃO PRIORITÁRIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalSituacaoPrioritaria'] ?>" disabled>
+						<input type="text" class="form-control situacaoPrioritaria" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalSituacaoPrioritaria'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -534,7 +534,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-85" id="basic-addon3" style="background-color:rgb(142,169,219);">PESSOAS COM DEFICIÊNCIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalPossuiDeficiencia'] ?>" disabled>
+						<input type="text" class="form-control deficiencia" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalPossuiDeficiencia'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -542,13 +542,13 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">AUTISMO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalAutismo'] ?>" disabled>
+						<input type="text" class="form-control autismo" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalAutismo'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">FÍSICA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalFisicia'] ?>" disabled>
+						<input type="text" class="form-control fisica" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalFisicia'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -556,13 +556,13 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">INTELECTUAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalIntelectual'] ?>" disabled>
+						<input type="text" class="form-control intelectual" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalIntelectual'] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">MENTAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalMental'] ?>" disabled>
+						<input type="text" class="form-control mental" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalMental'] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -570,8 +570,18 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">SENSORIAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalSensorial'] ?>" disabled>
+						<input type="text" class="form-control sensorial" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalSensorial'] ?>" disabled>
 					</div>
+				</div>
+			</div>
+			<div class="row campoAssinatura">
+				<div class="col-6">
+                    <hr class="border border-2 opacity-50">
+                    <span class="text-center">TÉCNICO RESPONSÁVEL</span>
+				</div>
+                <div class="col-6">
+                    <hr class="border border-2 opacity-50">
+                    <span class="text-center">PRESIDENTE / RESPONSÁVEL LEGAL</span>
 				</div>
 			</div>
 			<?php
@@ -581,6 +591,11 @@
 				$stmt->close();
 			?>
 		</div>
+		<form id="form-impressao" action="impressao.php" method="post" style="display: none;">
+			<input type="hidden" name="cabecalho">
+			<input type="hidden" name="dados">
+			<input type="hidden" name="rodape">
+		</form>
 
 		<!-- Modal -->
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
