@@ -10,21 +10,21 @@
             exit();
         }
         else{
-            $cabecalho = $mysqli -> real_escape_string($_POST["cabecalho"]);
+            $cabecalho = filter_var(trim($_POST["cabecalho"]), FILTER_SANITIZE_STRING);
         }
         if(!isset($_POST["dados"])){
             echo "erro dados";
             exit();
         }
         else{
-            $dados = $mysqli -> real_escape_string($_POST["dados"]);
+            $dados = filter_var(trim($_POST["dados"]), FILTER_SANITIZE_STRING);
         }
         if(!isset($_POST["rodape"])){
             echo "erro rodapé";
             exit();
         }
         else{
-            $rodape = $mysqli -> real_escape_string($_POST["rodape"]);
+            $rodape = filter_var(trim($_POST["rodape"]), FILTER_SANITIZE_STRING);
         }
 	}	
 ?>
@@ -76,19 +76,19 @@
 				<div class="col-3">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">FAIXA ETÁRIA:</span>
-						<input type="text" class="form-control faixaEtaria" id="basic-url" aria-describedby="basic-addon3" value="<?php $vetorCabecalho[3] ?>" disabled>
+						<input type="text" class="form-control faixaEtaria" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[3] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">NOME DO GRUPO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php $vetorCabecalho[4] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[4] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">CARGA HORÁRiA SEMANAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['cargaHoraria'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[5] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -96,13 +96,13 @@
 				<div class="col-3">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">CRAS DE REF.:</span>
-						<input type="text" class="form-control cras_osc" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['crasReferencia'] ?>" disabled>
+						<input type="text" class="form-control cras_osc" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[6] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-9">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">TÉCNICO DE REF. DO CRAS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['nomeTecnico'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[7] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -110,7 +110,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">LOCAL DE EXECUÇÃO DO SERVIÇO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['logradouro'].', '.$row['numeroEndereco'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[8] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
@@ -126,7 +126,7 @@
 				</div>
 			</div>
 			<div class="row mb-4">
-				<div class="col-9" style="text-align: right;">
+				<div class="col-9" style="text-align: right;" id="btnVoltar">
 					<a href="detalhes_Grupo.php" class="btn btn-primary">Voltar</a>
 				</div>
 			</div>
@@ -145,12 +145,32 @@
 								</tr>
 							</thead>
 							<tbody>
-                                <td class="seqAtendido"><?php echo $contador; $contador+=1; ?></td>
-                                <td class="tbl_nomeAtendido"><?php echo $row['nomeAtendido'] ?></td>
-                                <td class="tbl_nis"><?php echo $row['nis'] ?></td>
-                                <td class="tbl_cpf"><?php echo $row['cpf'] ?></td>
-                                <td class="tbl_situacaoPrioritaria"><?php echo $row['situacaoPrioritaria'] ?></td>
-                                <td class="tbl_nomeGenitora"><?php echo $row['nomeGenitora'] ?></td>
+								<?php
+									/*echo var_dump($cabecalho);
+									Echo "<br><br><br><br><br>";
+									echo var_dump($dados);
+									Echo "<br><br><br><br><br>";
+									echo var_dump($rodape);
+									Echo "<br><br><br><br><br>";
+									exit();*/
+									echo "<tr>";
+									$tamanhoVetor=count($vetorDados);
+									$contador=0;
+									$i=0;
+									$array = array("seqAtendido", "tbl_nomeAtendido", "tbl_nis", "tbl_cpf","tbl_situacaoPrioritaria","tbl_nomeGenitora");
+									for ($i = 0; $i < $tamanhoVetor-1; $i++) {
+											if($vetorDados[$i]!="FIM"){
+												echo "<td class='".$array[$contador]."'>".$vetorDados[$i]."</td>";
+												$contador+=1;
+											}
+											else{
+												$contador=0;
+												echo "</tr><tr><td class='".$array[$contador]."'>".$vetorDados[$i+1]."</td>";
+												$i+=1;
+												
+											}
+									}
+								?>
 								</tr>
 							</tbody>
 						</table>
@@ -161,7 +181,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">TOTAL DE ATENDIDOS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalAtendidos']-$row['totalExcluidos']-$row['totalTransferidos'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[0] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -169,7 +189,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">NIS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalNis'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[1] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -177,7 +197,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219)">REFERENCIADOS NO CRAS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalReferenciadoCras'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[2] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -185,7 +205,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">PAIF / PAEFI / NENHUM DOS DOIS:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalPaif']." / ".$row['totalPaefi']." / ".$row['totalNaoPaifPaefi'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[3] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -193,7 +213,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">QUANTIDADE FORA DE SITUAÇÃO PRIORITÁRIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalForaSituacaoPrioritaria'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[4] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -201,7 +221,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">QUANTIDADE EM SITUAÇÃO PRIORITÁRIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalSituacaoPrioritaria'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[5] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -209,7 +229,7 @@
 				<div class="col-8">
 					<div class="input-group">
 						<span class="input-group-text largura-85" id="basic-addon3" style="background-color:rgb(142,169,219);">PESSOAS COM DEFICIÊNCIA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalPossuiDeficiencia'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[6] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -217,13 +237,13 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">AUTISMO:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalAutismo'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[7] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">FÍSICA:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalFisicia'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[8] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -231,13 +251,13 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">INTELECTUAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalIntelectual'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[9] ?>" disabled>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">MENTAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalMental'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[10] ?>" disabled>
 					</div>
 				</div>
 			</div>
@@ -245,18 +265,16 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">SENSORIAL:</span>
-						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalSensorial'] ?>" disabled>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorRodape[11] ?>" disabled>
 					</div>
 				</div>
 			</div>
-            <div class="row">
-				<div class="col-6">
-                    <hr class="border border-2 opacity-50">
-                    <span class="text-center">TÉCNICO RESPONSÁVEL</span>
+            <div class="row mt-5">
+				<div class="col-6 mt-5">
+                    <hr class="border border-2 border-secondary opacity-100"><p class="text-center mt-n1">TÉCNICO RESPONSÁVEL</p>
 				</div>
-                <div class="col-6">
-                    <hr class="border border-2 opacity-50">
-                    <span class="text-center">PRESIDENTE / RESPONSÁVEL LEGAL</span>
+                <div class="col-6 mt-5">
+                    <hr class="border border-2 border-secondary opacity-100"><p class="text-center mt-n1">PRESIDENTE / RESPONSÁVEL LEGAL</p>
 				</div>
 			</div>
 		</div>
