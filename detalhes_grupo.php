@@ -137,9 +137,29 @@
 						<label class="input-group-text blue-cell" for="inputGroupSelect01">MÊS/ANO DE REF.</label>
 						<select class="form-select" id="inputGroupSelect01">
 						<option selected>Selecione...</option>
-						<option value="1">Janeiro/2024</option>
-						<option value="2">Fevereiro/2024</option>
-						<option value="3">Março/2024</option>
+						<?php
+							// Array com os nomes dos meses em português
+							$meses = array(
+								"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+								"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+							);
+
+							// Ano atual
+							$anoAtual = date("Y");
+
+							// Ano posterior (próximo ano)
+							$anoPosterior = $anoAtual + 1;
+
+							// Itera pelos anos (atual e o posterior)
+							for ($ano = $anoAtual; $ano <= $anoPosterior; $ano++) {
+								// Itera pelos meses
+								foreach ($meses as $indice => $nomeMes) {
+									// Gera o valor no formato MÊS/ANO
+									$valor = sprintf("%02d", $indice + 1) . "/" . $ano;
+									echo "<option value='$valor'>$nomeMes/$ano</option>";
+								}
+							}
+						?>
 						</select>
 					</div>
 				</div>
@@ -925,13 +945,13 @@
 										<select class="form-select modal_numeroGrupoTransferido" id="inputGroupSelect06" disabled>
 											<option value="0" selected>Selecione...</option>
 											<?php
-												$sql= "SELECT id, numero_grupo from dados_grupos where id_osc=?;";
+												$sql= "SELECT id, numero_grupo, com_sem_termo from dados_grupos where id_osc=?;";
 												$stmt = $mysqli->prepare($sql);
 												$stmt->bind_param("i", $_SESSION['id']);
 												if($stmt->execute()){
 													$resultado = $stmt->get_result();
 													while($row = $resultado->fetch_assoc()) { 
-														echo '<option value="'.$row["id"].'">'.$row["numero_grupo"].'</option>';
+														echo '<option value="'.$row["id"].'">'.$row["com_sem_termo"]." ".$row["numero_grupo"].'</option>';
 													}
 												}
 												$resultado->free_result();
