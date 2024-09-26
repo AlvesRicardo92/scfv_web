@@ -184,7 +184,14 @@
 					</svg>
 					<figcaption class="figure-caption text-center border border-secondary border-top-0">
 						<h1>
-							<?php echo $row['qtdeSituacaoPrioritaria'] ?>
+						<?php 
+							if (isset($row['qtdeSituacaoPrioritaria'], $row['qtdeAtendidosComTermo']) && $row['qtdeAtendidosComTermo'] != 0) {
+								$percentual = ($row['qtdeSituacaoPrioritaria'] / $row['qtdeAtendidosComTermo']) * 100;
+								echo $row['qtdeSituacaoPrioritaria'] . " <span style='font-size: 50%;'>(" . number_format($percentual, 2) . "%)</span>";
+							} else {
+								echo $row['qtdeSituacaoPrioritaria'];
+							}
+						?>
 						</h1>
 					</figcaption>
 					</figure>
