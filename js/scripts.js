@@ -1457,7 +1457,7 @@ $(document).ready(function () {
         $('.modal_complementoEndereco').val(complementoEndereco);
     });
     // #endregion
-    // Função para aplicar as alterações antes de imprimir
+    /*// Função para aplicar as alterações antes de imprimir
     $(window).on('beforeprint', function() {
         // Esconder colunas específicas (cabeçalhos e dados)
         $('.tabelaAtendidos th:nth-child(0), .tabelaAtendidos td:nth-child(0),'
@@ -1504,9 +1504,9 @@ $(document).ready(function () {
 
         // Mostrar campoAssinatura durante a impressão
         $('.campoAssinatura').show();
-    });
+    });*/
 
-    // Função para reverter as alterações após a impressão
+    /*// Função para reverter as alterações após a impressão
     $(window).on('afterprint', function() {
         // Mostrar todas as colunas de volta
         $('.tabelaAtendidos th, .tabelaAtendidos td').show();
@@ -1516,7 +1516,16 @@ $(document).ready(function () {
 
         // Mostrar elementos que foram escondidos
         $('.navbar, .mesReferencia, .btnVoltar, #novoAtendido, #imprimirGrupo').show();
-    });
+    });*/
+
+     // Obtém o caminho completo do arquivo
+     var pageName = window.location.pathname;
+
+     // Verifica se a página atual é "impressao.php"
+     if (pageName.endsWith("impressao.php")) {
+         // Se for "impressao.php", abre a janela de impressão
+         window.print();
+     }
 });
 // #endregion
 
@@ -2044,12 +2053,19 @@ $('.modal_cnpj').blur(function () {
 });
 
 $('#imprimirGrupo').click(function () {
-    var cabecalho;
-    var dados;
-    var rodape;
+    var cabecalho="";
+    var dados="";
+    var rodape="";
+    var meses = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+    var dataAtual = new Date();
+    var nomeMes = meses[dataAtual.getMonth()];
+    var ano = dataAtual.getFullYear();
 
     cabecalho= $('.nome_osc').val()+"|"+$('.numeroGrupo').val()+"|"+$('.diasSemana').val()+"|"+$('.faixaEtaria').val()+"|"+$('.nomeGrupo').val()+"|"+
-               $('.chSemanal').val()+"|"+$('.cras_osc').val()+"|"+$('.tecnicoCras').val()+"|"+$('.localExecucao').val();
+               $('.chSemanal').val()+"|"+$('.cras_osc').val()+"|"+$('.tecnicoCras').val()+"|"+$('.localExecucao').val()+"|"+ nomeMes+"/"+ano;
 
     // Seleciona a tabela
     var tabela = document.getElementById("tabelaAtendidos");
@@ -2060,9 +2076,11 @@ $('#imprimirGrupo').click(function () {
     // Usa um for loop tradicional para percorrer as linhas
     for (var i = 0; i < linhas.length; i++) {
         if(linhas[i].getElementsByTagName("td")[15].innerText!= "EXCLUIR" && linhas[i].getElementsByTagName("td")[15].innerText!= "TRANSFERIDO"){
+            console.log(dados);
             dados += linhas[i].getElementsByTagName("td")[3].innerText +"|"+ linhas[i].getElementsByTagName("td")[4].innerText +"|"+ 
                  linhas[i].getElementsByTagName("td")[5].innerText +"|"+ linhas[i].getElementsByTagName("td")[6].innerText +"|"+ 
                  linhas[i].getElementsByTagName("td")[14].innerText +"|"+ linhas[i].getElementsByTagName("td")[25].innerText+"|FIM|";
+            console.log(dados);
         }
         
     }

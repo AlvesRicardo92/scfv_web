@@ -114,20 +114,17 @@
 					</div>
 				</div>
 				<div class="col-4">
-					<div class="input-group mb-3 mesReferencia">
-						<label class="input-group-text blue-cell" for="inputGroupSelect01">MÊS/ANO DE REF.</label>
-						<select class="form-select" id="inputGroupSelect01">
-						<option selected>Selecione...</option>
-						<option value="1">Janeiro/2024</option>
-						<option value="2">Fevereiro/2024</option>
-						<option value="3">Março/2024</option>
-						</select>
+					<div class="input-group">
+						<span class="input-group-text blue-cell" id="basic-addon3">MÊS/ANO DE REF.:</span>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[9] ?>" disabled>
 					</div>
 				</div>
 			</div>
 			<div class="row mb-4">
-				<div class="col-9" style="text-align: right;" id="btnVoltar">
-					<a href="detalhes_Grupo.php" class="btn btn-primary">Voltar</a>
+				<div class="col-9">
+				</div>
+				<div class="col-3" style="text-align: right;" id="divBtnVoltar">
+					<a href="detalhes_OSC.php" class="btn btn-primary">Voltar</a>
 				</div>
 			</div>
 			<div class="row mb-2">
@@ -145,33 +142,29 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php
-									/*echo var_dump($cabecalho);
-									Echo "<br><br><br><br><br>";
-									echo var_dump($dados);
-									Echo "<br><br><br><br><br>";
-									echo var_dump($rodape);
-									Echo "<br><br><br><br><br>";
-									exit();*/
-									echo "<tr>";
-									$tamanhoVetor=count($vetorDados);
-									$contador=0;
-									$i=0;
-									$array = array("seqAtendido", "tbl_nomeAtendido", "tbl_nis", "tbl_cpf","tbl_situacaoPrioritaria","tbl_nomeGenitora");
-									for ($i = 0; $i < $tamanhoVetor-1; $i++) {
-											if($vetorDados[$i]!="FIM"){
-												echo "<td class='".$array[$contador]."'>".$vetorDados[$i]."</td>";
-												$contador+=1;
-											}
-											else{
-												$contador=0;
-												echo "</tr><tr><td class='".$array[$contador]."'>".$vetorDados[$i+1]."</td>";
-												$i+=1;
-												
-											}
+							<?php
+								echo "<tr>";
+								$tamanhoVetor=count($vetorDados);
+								$contador=0;
+								$i=0;
+								$array = array("seqAtendido", "tbl_nomeAtendido", "tbl_nis", "tbl_cpf","tbl_situacaoPrioritaria","tbl_nomeGenitora");
+								for ($i = 0; $i < $tamanhoVetor-2; $i++) {
+									if($vetorDados[$i]!="FIM"){
+										echo "<td class='".$array[$contador]."'>".$vetorDados[$i]."</td>";
+										$contador+=1;
 									}
-								?>
-								</tr>
+									else{
+										$contador=0;
+										if($i==$tamanhoVetor-2){
+											echo "</tr>";	
+										}
+										else{
+											echo "</tr><tr><td class='".$array[$contador]."'>".$vetorDados[$i+1]."</td>";
+										}
+										$i+=1;
+									}
+								}
+							?>
 							</tbody>
 						</table>
 					</div>	

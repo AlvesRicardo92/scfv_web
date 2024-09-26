@@ -47,6 +47,9 @@ td{
 .campoAssinatura{
   display:none;
 }
+body{
+  transform: scale(1);
+}
 
 @media print {
   /* Define a orientação da impressão como paisagem */
@@ -54,7 +57,7 @@ td{
     size: A4 landscape; /* Folha no modo paisagem */
     margin: 5mm; /* Margens mínimas */
   }
-  #btnVoltar {
+  #divBtnVoltar {
     display: none;
   }
 }

@@ -152,7 +152,6 @@
 			</div>
 			<div class="row mb-4">
 				<div class="col-9">
-					<!--<button type="button" class="btn btn-primary" id="voltarDetalheOSC">Voltar</button>-->
 					<a href="detalhes_OSC.php" class="btn btn-primary btnVoltar">Voltar</a>
 				</div>
 				<div class="col-3" style="text-align: right;">
