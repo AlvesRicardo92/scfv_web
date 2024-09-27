@@ -1416,7 +1416,6 @@ $(document).ready(function () {
         } else {
             $(".modal_numeroGrupoTransferido").val(0);
         }
-        //$('.modal_numeroGrupoTransferido').val(numeroGrupoTransferido);
         if (referenciadoCras != '' && referenciadoCras != null) {
             $(".modal_referenciadoCras option:contains('" + referenciadoCras + "')").prop("selected", true);
         }
@@ -1457,67 +1456,7 @@ $(document).ready(function () {
         $('.modal_complementoEndereco').val(complementoEndereco);
     });
     // #endregion
-    /*// Função para aplicar as alterações antes de imprimir
-    $(window).on('beforeprint', function() {
-        // Esconder colunas específicas (cabeçalhos e dados)
-        $('.tabelaAtendidos th:nth-child(0), .tabelaAtendidos td:nth-child(0),'
-        + '.tabelaAtendidos th:nth-child(1), .tabelaAtendidos td:nth-child(1),'
-        + '.tabelaAtendidos th:nth-child(2), .tabelaAtendidos td:nth-child(2),'
-        + '.tabelaAtendidos th:nth-child(7), .tabelaAtendidos td:nth-child(7),'
-        + '.tabelaAtendidos th:nth-child(8), .tabelaAtendidos td:nth-child(8),'
-        + '.tabelaAtendidos th:nth-child(9), .tabelaAtendidos td:nth-child(9),'
-        + '.tabelaAtendidos th:nth-child(10), .tabelaAtendidos td:nth-child(10),'
-        + '.tabelaAtendidos th:nth-child(11), .tabelaAtendidos td:nth-child(11),'
-        + '.tabelaAtendidos th:nth-child(12), .tabelaAtendidos td:nth-child(12),'
-        + '.tabelaAtendidos th:nth-child(13), .tabelaAtendidos td:nth-child(13),'
-        + '.tabelaAtendidos th:nth-child(15), .tabelaAtendidos td:nth-child(15),'
-        + '.tabelaAtendidos th:nth-child(16), .tabelaAtendidos td:nth-child(16),'
-        + '.tabelaAtendidos th:nth-child(17), .tabelaAtendidos td:nth-child(17),'
-        + '.tabelaAtendidos th:nth-child(18), .tabelaAtendidos td:nth-child(18),'
-        + '.tabelaAtendidos th:nth-child(19), .tabelaAtendidos td:nth-child(19),'
-        + '.tabelaAtendidos th:nth-child(20), .tabelaAtendidos td:nth-child(20),'
-        + '.tabelaAtendidos th:nth-child(21), .tabelaAtendidos td:nth-child(21),'
-        + '.tabelaAtendidos th:nth-child(22), .tabelaAtendidos td:nth-child(22),'
-        + '.tabelaAtendidos th:nth-child(23), .tabelaAtendidos td:nth-child(23),'
-        + '.tabelaAtendidos th:nth-child(24), .tabelaAtendidos td:nth-child(24),'
-        + '.tabelaAtendidos th:nth-child(26), .tabelaAtendidos td:nth-child(26),'
-        + '.tabelaAtendidos th:nth-child(27), .tabelaAtendidos td:nth-child(27),'
-        + '.tabelaAtendidos th:nth-child(28), .tabelaAtendidos td:nth-child(28),'
-        + '.tabelaAtendidos th:nth-child(29), .tabelaAtendidos td:nth-child(29),'
-        + '.tabelaAtendidos th:nth-child(30), .tabelaAtendidos td:nth-child(30),'
-        + '.tabelaAtendidos th:nth-child(31), .tabelaAtendidos td:nth-child(31),'
-        + '.tabelaAtendidos th:nth-child(32), .tabelaAtendidos td:nth-child(32)'
-        ).hide();
-
-        $('.tabelaAtendidos th:nth-child(4), .tabelaAtendidos td:nth-child(4)').show();
-
-        // Esconder navbar e outros elementos específicos
-        $('.navbar, .mesReferencia, .btnVoltar, #novoAtendido, #imprimirGrupo').hide();
-
-        // Esconder linhas baseadas no conteúdo da coluna 14
-        $('.tabelaAtendidos tbody tr').each(function() {
-            var status = $(this).find('td:nth-child(15)').text();
-            if (status === 'EXCLUIR' || status === 'TRANSFERIDO') {
-                $(this).hide();
-            }
-        });
-
-        // Mostrar campoAssinatura durante a impressão
-        $('.campoAssinatura').show();
-    });*/
-
-    /*// Função para reverter as alterações após a impressão
-    $(window).on('afterprint', function() {
-        // Mostrar todas as colunas de volta
-        $('.tabelaAtendidos th, .tabelaAtendidos td').show();
-        $('.tabelaAtendidos th:nth-child(2), .tabelaAtendidos td:nth-child(2),'
-        + '.tabelaAtendidos th:nth-child(3), .tabelaAtendidos td:nth-child(3)'
-        ).hide();
-
-        // Mostrar elementos que foram escondidos
-        $('.navbar, .mesReferencia, .btnVoltar, #novoAtendido, #imprimirGrupo').show();
-    });*/
-
+    
      // Obtém o caminho completo do arquivo
      var pageName = window.location.pathname;
 
@@ -1619,7 +1558,48 @@ $('#novaOSC').click(function () {
     
 });
 // #endregion
+$('.modal_numeroGrupoTransferido').change(function () {
+    if($(this).val()>0){
+        if (confirm("Tem certeza que deseja transferir o atendido "+ $('.modal_nomeAtendido').val()+" para o grupo "+$(".modal_numeroGrupoTransferido option:selected").text()+"\n\nAperte OK para confirmar ou Cancelar para desistir") == true) {
+            //alert("You pressed OK!\n"+$(this).val());
+            $("#salvarAlteracao").trigger('click');
+            var idAtendido =$("#idAtendido").text();
+            var idGrupoNovo=$(".modal_numeroGrupoTransferido option:selected").val();
+            $.ajax({
+                url: 'transferirAtendidoGrupo.php',
+                async: false,
+                type: 'POST',
+                data: { idAtendido: idAtendido, idGrupoNovo: idGrupoNovo},
+                dataType: 'text',
+                done: function () {
+                    alert("feito");
+                    console.log('feito');
+                },
+                success: function (resultado) {
+                    if(resultado==1){
+                        alert("Atendido transferido de grupo com sucesso!");
+                    }
+                    else{
+                        alert("Erro ao transferir de grupo!");   
+                        console.log(resultado);
+                    }
+                },
+                fail: function (resultado) {
+                    alert("falha");
+                    console.log(resultado);
+                },
+                error: function (resultado) {
+                    alert("error");
+                    console.log(resultado);
+                }
+            });
 
+        } else {
+            $(".modal_numeroGrupoTransferido").val(0);
+        }
+    }
+
+});
 // #region BUSCAR DADOS DO GRUPO PARA PÁGINA ADMINISTRATIVA
 $('.modal_Grupos').change(function () {
     if ($(this).val() == 0) {
