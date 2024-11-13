@@ -34,42 +34,77 @@
 		
 		<div class="container">
 			<?php 
-				$sql= "SELECT  (
-					SELECT count(nome_grupo) FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?
-				) AS qtdeGruposComTermo,
-				(
-					 SELECT count(nome_grupo) FROM dados_grupos where com_sem_termo = 'SEM TERMO' and id_osc=?
-				) AS qtdeGruposSemTermo,
-				(
-					SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?)
-				) as qtdeAtendidosComTermo,
-				(
-					SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'SEM TERMO' and id_osc=?)
-				) as qtdeAtendidosSemTermo,
-				(
-					SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and situacao_prioritaria <> '1;'
-				) as qtdeSituacaoPrioritaria,
-				(
-					SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and id_referenciado_cras <> 1
-				) as qtdeReferenciadoCRAS,
-				(
-					SELECT count(a.id) FROM conteudo_grupo a 
-				
-					inner join dados_atendido b ON
-					b.id = a.id_atendido
-				
-					where a.id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and b.nis is not Null
-				
-				) as qtdeComNIS,
-				(
-					SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and id_possui_deficiencia <> 1
-				) as qtdeComDeficiencia";
+				if ($_SESSION['id']==100){
+					$sql= "SELECT  (
+						SELECT count(nome_grupo) FROM dados_grupos where com_sem_termo = 'COM TERMO'
+					) AS qtdeGruposComTermo,
+					(
+						SELECT count(nome_grupo) FROM dados_grupos where com_sem_termo = 'SEM TERMO'
+					) AS qtdeGruposSemTermo,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO') and id_status NOT IN (2, 5)
+					) as qtdeAtendidosComTermo,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'SEM TERMO') AND id_status NOT IN (2, 5)
+					) as qtdeAtendidosSemTermo,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO') and situacao_prioritaria <> '1;' AND id_status NOT IN (2, 5)
+					) as qtdeSituacaoPrioritaria,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO') and id_referenciado_cras <> 1 AND id_status NOT IN (2, 5)
+					) as qtdeReferenciadoCRAS,
+					(
+						SELECT count(a.id) FROM conteudo_grupo a 
+					
+						inner join dados_atendido b ON
+						b.id = a.id_atendido
+					
+						where a.id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO') and b.nis is not Null AND a.id_status NOT IN (2, 5)
+					
+					) as qtdeComNIS,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO') and id_possui_deficiencia <> 1 AND id_status NOT IN (2, 5)
+					) as qtdeComDeficiencia";
+				}
+				else{
+					$sql= "SELECT  (
+						SELECT count(id) FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?
+					) AS qtdeGruposComTermo,
+					(
+						SELECT count(id) FROM dados_grupos where com_sem_termo = 'SEM TERMO' and id_osc=?
+					) AS qtdeGruposSemTermo,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and id_status NOT IN (2, 5)
+					) as qtdeAtendidosComTermo,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'SEM TERMO' and id_osc=?) AND id_status NOT IN (2, 5)
+					) as qtdeAtendidosSemTermo,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and situacao_prioritaria <> '1;' AND id_status NOT IN (2, 5)
+					) as qtdeSituacaoPrioritaria,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and id_referenciado_cras <> 1 AND id_status NOT IN (2, 5)
+					) as qtdeReferenciadoCRAS,
+					(
+						SELECT count(a.id) FROM conteudo_grupo a 
+					
+						inner join dados_atendido b ON
+						b.id = a.id_atendido
+					
+						where a.id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and b.nis is not Null AND a.id_status NOT IN (2, 5)
+					
+					) as qtdeComNIS,
+					(
+						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO' and id_osc=?) and id_possui_deficiencia <> 1 AND id_status NOT IN (2, 5)
+					) as qtdeComDeficiencia";
+				}
 				$stmt = $mysqli->prepare($sql);
-				$stmt->bind_param("iiiiiiii", $_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id']);
+				if ($_SESSION['id']!=100){
+					$stmt->bind_param("iiiiiiii", $_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id'],$_SESSION['id']);
+				}
 				if($stmt->execute()){
 					$resultado = $stmt->get_result();
 					while($row = $resultado->fetch_assoc()) { 
-						//$row['status']
 			?>
 			<div class="row mb-3">
 				<div class="col-md-3 ">

@@ -1600,6 +1600,16 @@ $('.modal_numeroGrupoTransferido').change(function () {
     }
 
 });
+$('.oscUsuario').change(function () {
+    if($(this).val()>0){
+        $('.departamentoUsuario').val(0);
+    }
+});
+$('.departamentoUsuario').change(function () {
+    if($(this).val()>0){
+        $('.oscUsuario').val(0);
+    }
+});
 // #region BUSCAR DADOS DO GRUPO PARA PÁGINA ADMINISTRATIVA
 $('.modal_Grupos').change(function () {
     if ($(this).val() == 0) {
@@ -2730,7 +2740,7 @@ function validarCPF(strCPF) {
     for (i=1; i<=9; i++) soma = soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
     resto1 = (soma * 10) % 11;
 
-    if ((resto1 == 10) || (resto1 == 11))  resto = 0;
+    if ((resto1 == 10) || (resto1 == 11))  resto1 = 0;
     //if (resto != parseInt(strCPF.substring(9, 10)) ) return false;
 
     soma = 0;

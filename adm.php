@@ -20,7 +20,7 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 		<!-- JQuery -->
 		<script src="js/jquery-3.7.1.min.js"></script>
-		<title>Detalhes da OSC</title>
+		<title>Gerenciamento Administrativo</title>
 	</head>
 	<body>
 		<!-- Navbar -->
@@ -33,6 +33,7 @@
 		</nav>
 		<div class="container">
 			<div class="row mb-4">
+				<h1>OSCs</h1><br>
 				<div class="col-3">
 						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="novaOSC">Cadastrar Nova OSC</button>
 				</div>
@@ -82,6 +83,75 @@
 			<div class="row mb-2">
 				<div class="col-12" style="text-align:right;">
 					<button type="button" class="btn btn-primary" id="downloadTodosExcel">Fazer download</button>
+				</div>
+			</div>
+			<br><br><h1>Criar novo usuário</h1>
+			<div class="row">
+				<div class="col-8">
+					<div class="input-group">
+						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);width:20%;">Nome completo:</span>
+						<input type="text" class="form-control totalAtendidos" id="basic-url" aria-describedby="basic-addon3">
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="input-group">
+						<span class="input-group-text largura-55" id="basic-addon3" style="background-color:rgb(142,169,219);">Usuário:</span>
+						<input type="text" class="form-control comNIS" id="basic-url" aria-describedby="basic-addon3">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+				<div class="input-group mb-3">
+						<label class="input-group-text blue-cell" for="inputGroupSelect01">OSC</label>
+						<select class="form-select oscUsuario" id="inputGroupSelect01">
+						<option value=0 selected>Selecione...</option>
+						<?php 
+							$sql= "SELECT a.id as id, a.apelido_osc as osc, b.nome_cras as cras FROM dados_osc a 
+
+							inner join dados_cras b ON
+							b.id = a.id_cras_referencia
+							
+							ORDER BY a.apelido_osc";
+							$stmt = $mysqli->prepare($sql);
+							if($stmt->execute()){
+								$resultado = $stmt->get_result();
+								while($row = $resultado->fetch_assoc()) { 
+									echo "<option value=".$row['id'].">".$row['osc']." - ".$row['cras']."</option>";
+								}
+							}
+							$resultado->free_result();
+							$stmt->close();
+						?>
+						</select>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="input-group mb-3">
+						<label class="input-group-text blue-cell" for="inputGroupSelect01">Departamento</label>
+						<select class="form-select departamentoUsuario" id="inputGroupSelect01">
+						<option value=0 selected>Selecione...</option>
+						<?php 
+							$sql= "SELECT id, sigla_departamento FROM dados_departamento 
+							
+							ORDER BY sigla_departamento";
+							$stmt = $mysqli->prepare($sql);
+							if($stmt->execute()){
+								$resultado = $stmt->get_result();
+								while($row = $resultado->fetch_assoc()) { 
+									echo "<option value=".$row['id'].">".$row['sigla_departamento']."</option>";
+								}
+							}
+							$resultado->free_result();
+							$stmt->close();
+						?>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-2">
+				<div class="col-12" style="text-align:right;">
+					<button type="button" class="btn btn-primary" id="salvarUsuario">Salvar</button>
 				</div>
 			</div>
 			<form id="form-todos-excel" action="downloadExcelTodasOSCs.php" method="post" style="display: none;">
@@ -187,7 +257,6 @@
 											<?php
 												$sql= "select id, nome_cras from dados_cras;";
 												$stmt = $mysqli->prepare($sql);
-												//$stmt->bind_param("i", $idGrupo);
 												if($stmt->execute()){
 													$resultado = $stmt->get_result();
 													while($row = $resultado->fetch_assoc()) { 
@@ -266,7 +335,6 @@
 											<?php
 												$sql= "select id, nome_cras from dados_cras;";
 												$stmt = $mysqli->prepare($sql);
-												//$stmt->bind_param("i", $idGrupo);
 												if($stmt->execute()){
 													$resultado = $stmt->get_result();
 													while($row = $resultado->fetch_assoc()) { 
