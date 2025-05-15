@@ -36,10 +36,10 @@
 			<?php 
 				if ($_SESSION['id']==100){
 					$sql= "SELECT  (
-						SELECT count(nome_grupo) FROM dados_grupos where com_sem_termo = 'COM TERMO'
+						SELECT count(id) FROM dados_grupos where com_sem_termo = 'COM TERMO'
 					) AS qtdeGruposComTermo,
 					(
-						SELECT count(nome_grupo) FROM dados_grupos where com_sem_termo = 'SEM TERMO'
+						SELECT count(id) FROM dados_grupos where com_sem_termo = 'SEM TERMO'
 					) AS qtdeGruposSemTermo,
 					(
 						SELECT count(id) FROM conteudo_grupo where id_grupo in (SELECT id FROM dados_grupos where com_sem_termo = 'COM TERMO') and id_status NOT IN (2, 5)

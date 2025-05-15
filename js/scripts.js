@@ -952,6 +952,20 @@ $(document).ready(function () {
         else {
             $('.modal_enderecoExecucao').css({ border: '1px solid #dee2e6' });
         }
+        if ($('.modal_horarioDiaUm').val() == '') {
+            $('.modal_horarioDiaUm').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_horarioDiaUm').css({ border: '1px solid #dee2e6' });
+        }
+        if ($('.modal_horarioDiaDois').val() == '') {
+            $('.modal_horarioDiaDois').css({ border: '2px solid red' });
+            erros += 1;
+        }
+        else {
+            $('.modal_horarioDiaDois').css({ border: '1px solid #dee2e6' });
+        }
         
         if($('#staticBackdrop2Label').text()=="Novo Grupo"){
             if(erros==0){  
@@ -978,6 +992,8 @@ $(document).ready(function () {
                 
                 var cargaHoraria=$('.modal_cargaHoraria').val();
                 var enderecoExecucao=$('.modal_enderecoExecucao').val();
+                var horarioDiaUm=$('.modal_horarioDiaUm').val();
+                var horarioDiaDois=$('.modal_horarioDiaDois').val();
                 var idOSC =$('#modal_spanIdOSC').text();
                 var idGrupo =$('.modal_Grupos').val();
                 $.ajax({
@@ -985,7 +1001,7 @@ $(document).ready(function () {
                     async: false,
                     type: 'POST',
                     data: { tipo:"cadastrar", idOSC:idOSC,idGrupo:idGrupo,comSemTermo:comSemTermo,tecnicoOSC:tecnicoOSC,nomeGrupo:nomeGrupo,faixaEtaria:faixaEtaria,diasSemana:diasSemana,
-                            cargaHoraria:cargaHoraria,enderecoExecucao:enderecoExecucao},
+                            cargaHoraria:cargaHoraria,enderecoExecucao:enderecoExecucao,horarioDiaUm:horarioDiaUm,horarioDiaDois:horarioDiaDois},
                     dataType: 'text',
                     done: function () {
                         alert("feito");
@@ -1052,6 +1068,8 @@ $(document).ready(function () {
                 
                 var cargaHoraria=$('.modal_cargaHoraria').val();
                 var enderecoExecucao=$('.modal_enderecoExecucao').val();
+                var horarioDiaUm=$('.modal_horarioDiaUm').val();
+                var horarioDiaDois=$('.modal_horarioDiaDois').val();
                 var idOSC =$('#modal_spanIdOSC').text();
                 var idGrupo =$('.modal_Grupos').val();
                 console.log(comSemTermo+'\n'+tecnicoOSC+'\n'+nomeGrupo+'\n'+faixaEtaria+'\n'+diasSemana+'\n'+cargaHoraria+'\n'+enderecoExecucao+'\n'+idOSC+'\n'+idGrupo);
@@ -1060,7 +1078,7 @@ $(document).ready(function () {
                     async: false,
                     type: 'POST',
                     data: { tipo:"editar", idOSC:idOSC,idGrupo:idGrupo,comSemTermo:comSemTermo,tecnicoOSC:tecnicoOSC,nomeGrupo:nomeGrupo,faixaEtaria:faixaEtaria,diasSemana:diasSemana,
-                            cargaHoraria:cargaHoraria,enderecoExecucao:enderecoExecucao},
+                            cargaHoraria:cargaHoraria,enderecoExecucao:enderecoExecucao,horarioDiaUm:horarioDiaUm,horarioDiaDois:horarioDiaDois},
                     dataType: 'text',
                     done: function () {
                         alert("feito");
@@ -1626,6 +1644,8 @@ $('.modal_Grupos').change(function () {
         $('#inlineCheckbox5').val(0);
         $('.modal_cargaHoraria').val('');
         $('.modal_enderecoExecucao').val('');
+        $('.modal_horarioDiaUm').val('');
+        $('.modal_horarioDiaDois').val('');
         $("input[type='checkbox']").prop("checked", false);
         $("input[type='checkbox']").attr("disabled", "");
         $('#rb_comTermo').attr("disabled", "");
@@ -1640,6 +1660,8 @@ $('.modal_Grupos').change(function () {
         $('#inlineCheckbox5').attr("disabled", "");
         $('.modal_cargaHoraria').attr("disabled", "");
         $('.modal_enderecoExecucao').attr("disabled", "");
+        $('.modal_horarioDiaUm').attr("disabled", "");
+        $('.modal_horarioDiaDois').attr("disabled", "");
         $('#salvarGrupo').attr("disabled", "");
         $('#staticBackdrop2Label').text("Visualizar Grupos");
     }
@@ -1657,6 +1679,8 @@ $('.modal_Grupos').change(function () {
         $('#inlineCheckbox5').attr("disabled", "");
         $('.modal_cargaHoraria').attr("disabled", "");
         $('.modal_enderecoExecucao').attr("disabled", "");
+        $('.modal_horarioDiaUm').attr("disabled", "");
+        $('.modal_horarioDiaDois').attr("disabled", "");
         $('#salvarGrupo').attr("disabled", "");
         $("input[type='checkbox']").attr("disabled", "");
         $('#staticBackdrop2Label').text("Visualizar Grupos");
@@ -1684,6 +1708,8 @@ $('.modal_Grupos').change(function () {
                 $('.modal_faixaEtaria').val(resultado.idFaixaEtaria);
                 $('.modal_cargaHoraria').val(resultado.cargaHoraria);
                 $('.modal_enderecoExecucao').val(resultado.enderecoExecucao);
+                $('.modal_horarioDiaUm').val(resultado.horarioDiaUm);
+                $('.modal_horarioDiaDois').val(resultado.horarioDiaDois);
                 $('.modal_nomeTecnicoOSC').val(resultado.nomeTecnicoOsc);
                 if(resultado.comSemTermo=="COM TERMO"){
                     $('#rb_comTermo').prop("checked", true);
@@ -1726,6 +1752,8 @@ $('#grupos').click(function () {
     $('#inlineCheckbox5').attr("disabled", "");
     $('.modal_cargaHoraria').attr("disabled", "");
     $('.modal_enderecoExecucao').attr("disabled", "");
+    $('.modal_horarioDiaUm').attr("disabled", "");
+    $('.modal_horarioDiaDois').attr("disabled", "");
     $('#salvarGrupo').attr("disabled", "");
     $('.modal_Grupos').val(0);
     
@@ -1746,6 +1774,8 @@ $('#editarGrupo').click(function () {
     $('#inlineCheckbox5').removeAttr("disabled");
     $('.modal_cargaHoraria').removeAttr("disabled");
     $('.modal_enderecoExecucao').removeAttr("disabled");
+    $('.modal_horarioDiaUm').removeAttr("disabled");
+    $('.modal_horarioDiaDois').removeAttr("disabled");
     $('#salvarGrupo').removeAttr("disabled");
     $("input[type='checkbox']").removeAttr("disabled");
     $('#staticBackdrop2Label').text("Editar Grupo");
@@ -1766,6 +1796,8 @@ $('#novoGrupo').click(function () {
     $('#inlineCheckbox5').removeAttr("disabled");
     $('.modal_cargaHoraria').removeAttr("disabled");
     $('.modal_enderecoExecucao').removeAttr("disabled");
+    $('.modal_horarioDiaUm').removeAttr("disabled");
+    $('.modal_horarioDiaDois').removeAttr("disabled");
     $('#salvarGrupo').removeAttr("disabled");
     $('#staticBackdrop2Label').text("Novo Grupo");
     $('#editarGrupo').attr("style", "display:none;");
@@ -1789,6 +1821,8 @@ function limparDadosGrupo(){
     $('#ckbDiaSemana5').prop("checked", false);
     $('.modal_cargaHoraria').val("");
     $('.modal_enderecoExecucao').val("");
+    $('.modal_horarioDiaUm').val("");
+    $('.modal_horarioDiaDois').val("");
 }
 // #region MUDANÇA NO COMBO STATUS
 $('.modal_status').change(function () {
@@ -2055,7 +2089,7 @@ $('#imprimirGrupo').click(function () {
     var ano = dataAtual.getFullYear();
 
     cabecalho= $('.nome_osc').val()+"|"+$('.numeroGrupo').val()+"|"+$('.diasSemana').val()+"|"+$('.faixaEtaria').val()+"|"+$('.nomeGrupo').val()+"|"+
-               $('.chSemanal').val()+"|"+$('.cras_osc').val()+"|"+$('.tecnicoCras').val()+"|"+$('.localExecucao').val()+"|"+ nomeMes+"/"+ano;
+               $('.chSemanal').val()+"|"+$('.cras_osc').val()+"|"+$('.tecnicoCras').val()+"|"+$('.localExecucao').val()+"|"+ nomeMes+"/"+ano+"|"+$('.horarioDia1').val()+"|"+$('.horarioDia2').val();
 
     // Seleciona a tabela
     var tabela = document.getElementById("tabelaAtendidos");
@@ -2075,7 +2109,7 @@ $('#imprimirGrupo').click(function () {
         
     }
 
-    rodape=$('.totalAtendidos').val()+"|"+$('.comNIS').val()+"|"+$('.referenciadosCRAS').val()+"|"+$('.paifPaefi').val()+"|"+$('.foraSituacaoPrioritaria').val()+"|"+"|"+$('.situacaoPrioritaria').val()+"|"+
+    rodape=$('.totalAtendidos').val()+"|"+$('.comNIS').val()+"|"+$('.referenciadosCRAS').val()+"|"+$('.paifPaefi').val()+"|"+$('.foraSituacaoPrioritaria').val()+"|"+$('.situacaoPrioritaria').val()+"|"+
            $('.deficiencia').val()+"|"+$('.autismo').val()+"|"+$('.fisica').val()+"|"+$('.intelectual').val()+"|"+$('.mental').val()+"|"+"|"+$('.sensorial').val();
 
     $("#form-impressao input[name='cabecalho']").val(cabecalho);

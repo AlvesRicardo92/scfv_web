@@ -32,7 +32,7 @@
 			</div>
 		</nav>
 		<div class="container">
-			<p><strong>Para dúvidas de utilização, entrar em conto através do e-mail <a href="mailto:scfv.planilhas@saobernardo.sp.gov.br?subject=Dúvidas sobre a utilização do Sistema Web">scfv.planilhas@saobernardo.sp.gov.br</a> ou pelo telefone <a href="tel:+551126309701">2630-9701</a></strong></p>
+			<p><strong>Para dúvidas de utilização, entrar em conto através do e-mail <a href="mailto:scfv.planilhas@saobernardo.sp.gov.br?subject=Dúvidas sobre a utilização do Sistema Web">scfv.planilhas@saobernardo.sp.gov.br</a> ou pelo telefone <a href="tel:+551126309701">2630-6701</a></strong></p>
 		</div>
 
 		<!-- Bootstrap Bundle com Popper -->

@@ -53,6 +53,12 @@
         ?>
 		<div class="container">
 			<div class="row">
+				<div class="col-12 mt-1 mb-1">
+					<img src="imagens/logoSecretaria.png" class="rounded float-start" alt="logo da Secretaria de Desenvolvimento Social e Cidadania">
+					<img src="imagens/logoSUAS.png" class="rounded float-end" alt="logo da Secretaria de Desenvolvimento Social e Cidadania">
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-6">
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">OSC:</span>
@@ -117,6 +123,20 @@
 					<div class="input-group">
 						<span class="input-group-text blue-cell" id="basic-addon3">MÊS/ANO DE REF.:</span>
 						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[9] ?>" disabled>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="input-group">
+						<span class="input-group-text blue-cell" id="basic-addon3">HORÁRIO DE ATENDIMENTO DIA 1:</span>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[10] ?>" disabled>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="input-group">
+						<span class="input-group-text blue-cell" id="basic-addon3">HORÁRIO DE ATENDIMENTO DIA 2:</span>
+						<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $vetorCabecalho[11] ?>" disabled>
 					</div>
 				</div>
 			</div>

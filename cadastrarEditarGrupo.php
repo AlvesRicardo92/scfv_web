@@ -14,7 +14,9 @@
        !isset($_POST["faixaEtaria"])||
        !isset($_POST["diasSemana"])||
        !isset($_POST["cargaHoraria"])||
-       !isset($_POST["enderecoExecucao"])){
+       !isset($_POST["enderecoExecucao"])||
+       !isset($_POST["horarioDiaUm"])||
+       !isset($_POST["horarioDiaDois"])){
         echo 0;
         exit();
         
@@ -28,6 +30,9 @@
         $diasSemana = $mysqli -> real_escape_string($_POST["diasSemana"]);
         $cargaHoraria=$mysqli -> real_escape_string($_POST["cargaHoraria"]);
         $enderecoExecucao=$mysqli -> real_escape_string($_POST["enderecoExecucao"]);
+        $horarioDiaUm=$mysqli -> real_escape_string($_POST["horarioDiaUm"]);
+        $horarioDiaDois=$mysqli -> real_escape_string($_POST["horarioDiaDois"]);
+
         
         
         $variaveis=array();
@@ -135,6 +140,38 @@
                 $variaveis[]=$enderecoExecucao;
                 $tiposDeDados.='s';
                 $querySQL.='endereco_execucao=?,';
+            }
+        }
+        if($horarioDiaUm === null || trim($horarioDiaUm) === ''){
+            echo 11;
+            exit();
+        }
+        else{
+            if($tipo=="cadastrar"){
+                $variaveis[]=$horarioDiaUm;
+                $tiposDeDados.='s';
+                $querySQL.='horario_dia_um,';
+                $interrogacoes.='?,';
+            }else{
+                $variaveis[]=$enderecoExecucao;
+                $tiposDeDados.='s';
+                $querySQL.='horario_dia_um=?,';
+            }
+        }
+        if($horarioDiaDois === null || trim($horarioDiaDois) === ''){
+            echo 11;
+            exit();
+        }
+        else{
+            if($tipo=="cadastrar"){
+                $variaveis[]=$horarioDiaUm;
+                $tiposDeDados.='s';
+                $querySQL.='horario_dia_dois,';
+                $interrogacoes.='?,';
+            }else{
+                $variaveis[]=$enderecoExecucao;
+                $tiposDeDados.='s';
+                $querySQL.='horario_dia_dois=?,';
             }
         }
         $maximo = 0;

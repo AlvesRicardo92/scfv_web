@@ -16,11 +16,13 @@
 							<a class="nav-link" href="adm.php">ADM</a>
 						</li>';
 				}
+				else{
+					echo '<li class="nav-item">
+							<a class="nav-link" href="detalhes_OSC.php">SCFV</a>
+						</li>';
+				}
 			}
 		?>
-		<li class="nav-item">
-			<a class="nav-link" href="detalhes_OSC.php">SCFV</a>
-		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="contato.php">Contato</a>
 		</li>

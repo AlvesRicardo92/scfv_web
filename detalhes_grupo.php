@@ -53,7 +53,9 @@
 			a.endereco_execucao AS 'logradouro',
 			a.numero_endereco AS 'numeroEndereco',
 			a.nome_tecnico_osc AS 'nomeTecnico',
-			d.nome_cras as 'crasReferencia'
+			d.nome_cras as 'crasReferencia',
+			a.horario_dia_um AS 'horarioDia1',
+			a.horario_dia_dois AS 'horarioDia2'
 		FROM
 			dados_grupos a
 		LEFT JOIN dados_osc b ON
@@ -133,7 +135,7 @@
 					</div>
 				</div>
 				<div class="col-4">
-					<div class="input-group mb-3 mesReferencia">
+					<div class="input-group mesReferencia">
 						<label class="input-group-text blue-cell" for="inputGroupSelect01">MÊS/ANO DE REF.</label>
 						<select class="form-select" id="inputGroupSelect01">
 						<option selected>Selecione...</option>
@@ -163,13 +165,27 @@
 						</select>
 					</div>
 				</div>
-				<?php
-						}
-					}
-					$resultado->free_result();
-					$stmt->close();
-				?>
 			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="input-group mb-3">
+						<span class="input-group-text blue-cell" id="basic-addon3">HORÁRIO DE ATENDIMENTO DIA 1:</span>
+						<input type="text" class="form-control horarioDia1" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['horarioDia1'] ?>" disabled>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="input-group">
+						<span class="input-group-text blue-cell" id="basic-addon3">HORÁRIO DE ATENDIMENTO DIA 2:</span>
+						<input type="text" class="form-control horarioDia2" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['horarioDia2'] ?>" disabled>
+					</div>
+				</div>
+			</div>
+			<?php
+					}
+				}
+				$resultado->free_result();
+				$stmt->close();
+			?>
 			<div class="row mb-4">
 				<div class="col-9">
 					<a href="detalhes_OSC.php" class="btn btn-primary btnVoltar">Voltar</a>
@@ -363,133 +379,33 @@
 			</div>
 			<?php 
 				$sql= "SELECT
-				COUNT(resultado.idAtendido) AS totalAtendidos,
-				SUM(
-					CASE WHEN resultado.status = 'EXCLUIR' THEN 1 ELSE 0
-				END
-				) AS totalExcluidos,
-				SUM(
-					CASE WHEN resultado.status = 'TRANSFERIDO' THEN 1 ELSE 0
-				END
-				) AS totalTransferidos,
-				SUM(
-					CASE WHEN resultado.nis IS NOT NULL THEN 1 ELSE 0
-				END
-				) AS totalNis,
-				SUM(
-					CASE WHEN resultado.referenciadoCras = 'Sim' THEN 1 ELSE 0
-				END
-				) AS totalReferenciadoCras,
-				SUM(
-					CASE WHEN resultado.paifPaefi = 'PAIF' THEN 1 ELSE 0
-				END
-				) AS totalPaif,
-				SUM(
-					CASE WHEN resultado.paifPaefi = 'PAEFI' THEN 1 ELSE 0
-				END
-				) AS totalPaefi,
-				SUM(
-					CASE WHEN resultado.paifPaefi = 'NÃO' THEN 1 ELSE 0
-				END
-				) AS totalNaoPaifPaefi,
-				SUM(
-					CASE WHEN resultado.situacaoPrioritaria = '1;' THEN 1 ELSE 0
-				END
-				) AS totalForaSituacaoPrioritaria,
-				SUM(
-					CASE WHEN resultado.situacaoPrioritaria != '1;' THEN 1 ELSE 0
-				END
-				) AS totalSituacaoPrioritaria,
-				SUM(
-					CASE WHEN resultado.possuiDeficiencia = 'Sim' THEN 1 ELSE 0
-				END
-				) AS totalPossuiDeficiencia,
-				SUM(
-					CASE WHEN resultado.tipoDeficiencia = 'AUTISMO' THEN 1 ELSE 0
-				END
-				) AS totalAutismo,
-				SUM(
-					CASE WHEN resultado.tipoDeficiencia = 'FÍSICA' THEN 1 ELSE 0
-				END
-				) AS totalFisicia,
-				SUM(
-					CASE WHEN resultado.tipoDeficiencia = 'INTELECTUAL' THEN 1 ELSE 0
-				END
-				) AS totalIntelectual,
-				SUM(
-					CASE WHEN resultado.tipoDeficiencia = 'MENTAL' THEN 1 ELSE 0
-				END
-				) AS totalMental,
-				SUM(
-					CASE WHEN resultado.tipoDeficiencia = 'SENSORIAL' THEN 1 ELSE 0
-				END
-				) AS totalSensorial
-				FROM
-					(
-					SELECT
-						a.id AS 'idAtendido',
-						a.id_grupo AS 'idGrupo',
-						b.nome AS 'nomeAtendido',
-						b.nis AS 'nis',
-						b.cpf AS 'cpf',
-						a.telefone AS 'telefone',
-						a.adulto_participante_atividade AS 'adultoParticipante',
-						c.tipo_parentesco AS 'tipoParentesco',
-						b.data_nascimento AS 'dataNascimento',
-						d.cor_raca AS 'corRaca',
-						a.data_inclusao AS 'dataInclusao',
-						a.situacao_prioritaria AS 'situacaoPrioritaria',
-						e.status AS 'status',
-						a.data_desligamento AS 'dataDesligamento',
-						f.motivo_desligamento AS 'motivoDesligamento',
-						g.encaminhamento AS 'encaminhamento',
-						n.numero_grupo AS 'numeroGrupoTransferido',
-						h.referenciado AS 'referenciadoCras',
-						i.paif_paefi AS 'paifPaefi',
-						j.possui_deficiencia AS 'possuiDeficiencia',
-						k.tipo_deficiencia AS 'tipoDeficiencia',
-						a.nome_responsavel_familia AS 'nomeResponsavelFamilia',
-						a.nome_genitora AS 'nomeGenitora',
-						l.cep AS 'cep',
-						l.logradouro 'logradouro',
-						l.vila AS 'vila',
-						l.bairro AS 'bairro',
-						m.nome_cras AS 'cras',
-						a.numero_endereco AS 'numeroEndereco',
-						a.complemento_endereco AS 'complementoEndereco'
-					FROM
-						conteudo_grupo a
-					INNER JOIN dados_atendido b ON
-						b.id = a.id_atendido
-					LEFT JOIN dados_parentesco c ON
-						c.id = a.id_parentesco
-					LEFT JOIN dados_cor_raca d ON
-						d.id = a.id_cor_raca
-					LEFT JOIN dados_status e ON
-						e.id = a.id_status
-					LEFT JOIN dados_motivo_desligamento f ON
-						f.id = a.id_motivo_desligamento
-					LEFT JOIN dados_encaminhamento g ON
-						g.id = a.id_encaminhamento
-					LEFT JOIN dados_referenciado_cras h ON
-						h.id = id_referenciado_cras
-					LEFT JOIN dados_paif_paefi i ON
-						i.id = a.id_paif_paefi
-					LEFT JOIN dados_possui_deficiencia j ON
-						j.id = a.id_possui_deficiencia
-					LEFT JOIN dados_tipo_deificiencia k ON
-						k.id = a.id_tipo_deficiencia
-					LEFT JOIN dados_cep l ON
-						l.id = a.id_cep
-					LEFT JOIN dados_cras m ON
-						m.id = l.id_cras
-					LEFT JOIN dados_grupos n ON 
-									n.id = a.numero_grupo_transferido
-					WHERE
-						a.id_grupo = ?
-					ORDER BY
-						b.nome
-				) AS resultado;";
+				COUNT(*) AS totalAtendidos,
+			  
+				  SUM(CASE WHEN e.status = 'EXCLUIR' THEN 1 ELSE 0 END) AS totalExcluidos,
+				SUM(CASE WHEN e.status = 'TRANSFERIDO' THEN 1 ELSE 0 END) AS totalTransferidos,
+			  
+				  SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND b.nis IS NOT NULL THEN 1 ELSE 0 END) AS totalNis,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND h.referenciado = 'Sim' THEN 1 ELSE 0 END) AS totalReferenciadoCras,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND i.paif_paefi = 'PAIF' THEN 1 ELSE 0 END) AS totalPaif,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND i.paif_paefi = 'PAEFI' THEN 1 ELSE 0 END) AS totalPaefi,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND i.paif_paefi = 'NÃO' THEN 1 ELSE 0 END) AS totalNaoPaifPaefi,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND a.situacao_prioritaria = '1;' THEN 1 ELSE 0 END) AS totalForaSituacaoPrioritaria,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND a.situacao_prioritaria != '1;' THEN 1 ELSE 0 END) AS totalSituacaoPrioritaria,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND j.possui_deficiencia = 'Sim' THEN 1 ELSE 0 END) AS totalPossuiDeficiencia,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND k.tipo_deficiencia = 'AUTISMO' THEN 1 ELSE 0 END) AS totalAutismo,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND k.tipo_deficiencia = 'FÍSICA' THEN 1 ELSE 0 END) AS totalFisica,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND k.tipo_deficiencia = 'INTELECTUAL' THEN 1 ELSE 0 END) AS totalIntelectual,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND k.tipo_deficiencia = 'MENTAL' THEN 1 ELSE 0 END) AS totalMental,
+				SUM(CASE WHEN e.status NOT IN ('EXCLUIR', 'TRANSFERIDO') AND k.tipo_deficiencia = 'SENSORIAL' THEN 1 ELSE 0 END) AS totalSensorial
+			  
+			  FROM conteudo_grupo a
+			  INNER JOIN dados_atendido b ON b.id = a.id_atendido
+			  LEFT JOIN dados_status e ON e.id = a.id_status
+			  LEFT JOIN dados_referenciado_cras h ON h.id = a.id_referenciado_cras
+			  LEFT JOIN dados_paif_paefi i ON i.id = a.id_paif_paefi
+			  LEFT JOIN dados_possui_deficiencia j ON j.id = a.id_possui_deficiencia
+			  LEFT JOIN dados_tipo_deificiencia k ON k.id = a.id_tipo_deficiencia
+			  WHERE a.id_grupo = ?";
 				$stmt = $mysqli->prepare($sql);
 				$stmt->bind_param("i", $idGrupo);
 				if($stmt->execute()){
@@ -567,7 +483,7 @@
 				<div class="col-4">
 					<div class="input-group">
 						<span class="input-group-text largura-40" id="basic-addon3" style="background-color:rgb(142,169,219);">FÍSICA:</span>
-						<input type="text" class="form-control fisica" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalFisicia'] ?>" disabled>
+						<input type="text" class="form-control fisica" id="basic-url" aria-describedby="basic-addon3" value="<?php echo $row['totalFisica'] ?>" disabled>
 					</div>
 				</div>
 			</div>

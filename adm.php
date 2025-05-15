@@ -440,6 +440,20 @@
 									</div>
 								</div>
 							</div>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Horário de atendimento dia 1:</span>
+										<input type="text" class="form-control modal_horarioDiaUm" id="basic-url" aria-describedby="basic-addon3" value="" disabled>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-text" id="basic-addon3" style="background-color:rgb(142,169,219);">Horário de atendimento dia 2:</span>
+										<input type="text" class="form-control modal_horarioDiaDois" id="basic-url" aria-describedby="basic-addon3" value="" disabled>
+									</div>
+								</div>
+							</div>
 						</div>					
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-target="#staticBackdrop" data-bs-toggle="modal" data-bs-dismiss="modal">Cancelar</button>
